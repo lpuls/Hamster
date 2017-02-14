@@ -13,21 +13,47 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="资源文件\Lex">
-      <UniqueIdentifier>{7c9f5f76-fc81-49fb-bf66-60912c43ee00}</UniqueIdentifier>
+    <Filter Include="源文件\AST">
+      <UniqueIdentifier>{5fe59979-4d1b-429b-9ef7-c8652ad7b4fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\AST">
+      <UniqueIdentifier>{efad6f7d-d383-45f8-8429-809f5b70d0fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Lex.l">
-      <Filter>资源文件\Lex</Filter>
-    </None>
-    <None Include="说明.md">
-      <Filter>资源文件</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Tool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Lex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Yacc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\Node.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Yacc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\Node.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Tools\Lex.l">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\Tools\Yacc.y">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

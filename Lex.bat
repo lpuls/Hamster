@@ -1,3 +1,6 @@
-flex.exe Hamster/Lex.l
-move lex.yy.c Hamster\main.cpp
+Tools\flex.exe Tools\Lex.l
+move lex.yy.c Hamster\Lex.cpp
+Tools\bison.exe -d Tools\Yacc.y
+move Yacc.tab.c Hamster\Yacc.cpp
+move Yacc.tab.h Hamster\Yacc.h
 pause
