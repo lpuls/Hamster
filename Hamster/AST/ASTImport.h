@@ -1,7 +1,7 @@
 #ifndef __AST_IMPORT__
 #define __AST_IMPORT__
 
-#include "Node.h"
+#include "ASTNode.h"
 #include "ASTGuidance.h"
 
 #include <vector>
@@ -18,9 +18,10 @@ namespace Hamster
 			ASTImport();
 			~ASTImport();
 
-			ASTGuidance* packageName;
+			// ASTGuidance* packageName;
+            std::string packageName;
 
-			void virtual print() override;
+			std::string virtual print() override;
 
 		};
 	}

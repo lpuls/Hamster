@@ -1,4 +1,5 @@
 %{
+#include "Flex/Flex.h"
 #include "Yacc.h"
 #include "Tool.h"
 
@@ -6,8 +7,10 @@
 #include <iostream>
 
 #define fileno _fileno
+using namespace Hamster::FLEX;
 %}
 
+package package
 import import
 char [A-Za-z]|[_]
 num [0-9]
@@ -18,13 +21,18 @@ separated [\.]
 end [;]
 
 %%
+{package} {
+	yylval.String = yytext;
+	LOG_INFO(MC::toStr("PACKAGE: ", yytext));
+	return PACKAGE;
+}
 {import} {
 	yylval.String = yytext;
 	LOG_INFO(MC::toStr("IMPORT: ", yytext));
 	return IMPORT;
 }
 {separated} {
-	yylval.String = yytext;
+	// yylval.String = "";  // yytext;
 	LOG_INFO(MC::toStr("SEPARATED: ", yytext));
 	return SEPARATED; 
 }
@@ -41,8 +49,8 @@ end [;]
 {space} {
 }
 {end} {
-	yylval.String = yytext;
-	LOG_INFO(MC::toStr("END: ", yytext));
+	yylval.String = remove(yylval.String, ';');
+	LOG_INFO(MC::toStr("END: ", yylval.String));
 	return END;
 }
 %%

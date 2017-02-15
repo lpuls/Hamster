@@ -6,5 +6,6 @@ int main()
 	{
 		yyparse();
 	}
+    system("pause");
     return 0;
 }

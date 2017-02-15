@@ -1,7 +1,7 @@
 #ifndef __AST_GUIDANCE__
 #define __AST_GUIDANCE__
 
-#include "Node.h"
+#include "ASTNode.h"
 
 #include <vector>
 #include <string>
@@ -20,7 +20,10 @@ namespace Hamster
 			std::string name;
 			ASTGuidance* next;
 
-			void virtual print() override;
+			std::string virtual print() override;
+
+
+        private:
 		};
 
 	}

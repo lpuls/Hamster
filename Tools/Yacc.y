@@ -10,51 +10,79 @@ int yyerror(const char *);
 %}
 
 %code requires {
-#include "AST/Node.h"
+#include "AST/ASTNode.h"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
+#include "AST/ASTPackage.h"
 
 using namespace std;
 using namespace Hamster::AST;
 
+// %token IMPORT TOKEN SEPARATED END PACKAGE
 }
+
+%token <String> ASSIGN
+%token <String> IMPORT
+%token <String> TOKEN
+%token <String> SEPARATED
+%token <String> END
+%token <String> PACKAGE
 
 %union {
     int Int;
     char* String;
 	ASTImport* Import;
 	ASTGuidance* Guidance;
+	ASTPackage* Package;
 }
-%token ASSIGN IMPORT TOKEN SEPARATED END
-%type <String> TOKEN
-%type <String> ASSIGN
-%type <String> IMPORT
-%type <String> SEPARATED
+
+
 %type <Import> import
 %type <Guidance> package_name
+%type <Package> package
 
 %%
 file : import
+	| package
 ;
 import : IMPORT package_name {
-		$$ = new Hamster::AST::ASTImport();
-		$$->packageName = $2;
-		$$->print();
+		auto node = new Hamster::AST::ASTImport();
+		std::string packageName = $2->name;
+		node->packageName = packageName;
+		MC::log(typeid($2).name(), BLUE);
+		MC::log(packageName, RED);
+		node->print();
+		$$ = node;
 	}
 ;
+package : PACKAGE package_name {
+		// $$ = new Hamster::AST::ASTPackage();
+		// $$->packageName = $2;
+		// $$->print();
+	}
 package_name : TOKEN package_name {
-		$$ = new Hamster::AST::ASTGuidance();
-		$$->name = $1;
-		$$->next = $2;
-		$$->print();
+		auto node = new Hamster::AST::ASTGuidance();
+		node->name = $1;
+		node->next = $2;
+		node->print();
+		$$ = node;
+		// MC::log(typeid($1).name(), BLUE);
+		// MC::log(typeid($2).name(), BLUE);
+		// MC::log(MC::toStr("Token ", $1), RED); 
+		// MC::log(MC::toStr("package_name ", $2), RED); 
 	}
 	| SEPARATED package_name { 
-		$$ = nullptr;
-		MC::log("Separated ", BLUE); 
+		// $$ = $2;
+		auto I = $$;
+		auto II = $1;
+		auto III = $2;
+		MC::log(MC::toStr("Separated ", $2), RED); 
 	}
-	| END { 
-		$$ = nullptr;
-		MC::log("End", BLUE); 
+	| END  { 
+		$$ = nullptr; 
+		auto I = $$;
+		auto II = $1;
+		MC::log($1, RED); 
 	}
 ;
 %%

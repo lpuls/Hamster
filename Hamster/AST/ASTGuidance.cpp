@@ -17,9 +17,14 @@ ASTGuidance::~ASTGuidance()
 }
 
 
-void ASTGuidance::print()
+std::string ASTGuidance::print()
 {
-	LOG_INFO(MC::toStr("Package Name Park: ", name));
-	if (nullptr != next)
-		next->print();
+    std::string log = ""; // "Package Name Park: ";
+    if (nullptr != next)
+    {
+        MC::toStr(log, next->print());
+        MC::toStr(log, " ");
+    }
+    MC::log(MC::toStr(log, name), DARK_GREEN);
+    return log;
 }

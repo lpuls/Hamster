@@ -69,3 +69,11 @@ void MC::sleep(unsigned int time)
 #endif
 }
 
+char * MC::toChar(const char * str)
+{
+    int size = strlen(str) + 1;
+    char *buf = new char[size];
+    strcpy_s(buf, size, str);
+    return buf;
+}
+
