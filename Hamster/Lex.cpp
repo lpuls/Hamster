@@ -285,8 +285,8 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_END_OF_BUFFER 8
 static yyconst short int yy_accept[18] =
     {   0,
-        0,    0,    8,    7,    4,    6,    5,    3,    2,    2,
-        2,    2,    2,    2,    2,    1,    0
+        0,    0,    8,    7,    5,    2,    6,    4,    3,    3,
+        3,    3,    3,    3,    3,    1,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -621,41 +621,41 @@ YY_RULE_SETUP
 #line 26 "Tools\\Lex.l"
 {
 	yylval.String = yytext;
-	LOG_INFO(MC::toStr("TOKEN: ", yytext));
-	return TOKEN;
+	LOG_INFO(MC::toStr("SEPARATED: ", yytext));
+	return SEPARATED; 
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 31 "Tools\\Lex.l"
+{
+	yylval.String = yytext;
+	LOG_INFO(MC::toStr("TOKEN: ", yytext));
+	return TOKEN;
+}
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
+#line 36 "Tools\\Lex.l"
 { 
 	yylval.String = yytext;
 	LOG_INFO(MC::toStr("ASSIGN: ", yytext));
 	return ASSIGN;
 }
 	YY_BREAK
-case 4:
-YY_RULE_SETUP
-#line 36 "Tools\\Lex.l"
-{
-}
-	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 38 "Tools\\Lex.l"
+#line 41 "Tools\\Lex.l"
 {
-	yylval.String = yytext;
-	LOG_INFO(MC::toStr("END: ", yytext));
-	return END;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 43 "Tools\\Lex.l"
 {
-	yylval.Int = atoi(yytext);
-	LOG_INFO(MC::toStr("SEPARATED: ", yytext));
-	return SEPARATED; 
+	yylval.String = yytext;
+	LOG_INFO(MC::toStr("END: ", yytext));
+	return END;
 }
 	YY_BREAK
 case 7:
@@ -1525,7 +1525,15 @@ int main()
 #endif
 #line 48 "Tools\\Lex.l"
 
-
+/*
+int main()
+{
+	while (true)
+		yylex();
+	// system("pause");
+	return 0;
+}
+*/
 int yywrap()
 {
 	return 1;

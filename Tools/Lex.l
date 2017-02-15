@@ -14,7 +14,7 @@ num [0-9]
 assign [=]
 token {char}+
 space [\t|\n|" "]
-separated [.]
+separated [\.]
 end [;]
 
 %%
@@ -22,6 +22,11 @@ end [;]
 	yylval.String = yytext;
 	LOG_INFO(MC::toStr("IMPORT: ", yytext));
 	return IMPORT;
+}
+{separated} {
+	yylval.String = yytext;
+	LOG_INFO(MC::toStr("SEPARATED: ", yytext));
+	return SEPARATED; 
 }
 {token} {
 	yylval.String = yytext;
@@ -40,13 +45,16 @@ end [;]
 	LOG_INFO(MC::toStr("END: ", yytext));
 	return END;
 }
-{separated} {
-	yylval.Int = atoi(yytext);
-	LOG_INFO(MC::toStr("SEPARATED: ", yytext));
-	return SEPARATED; 
-}
 %%
-
+/*
+int main()
+{
+	while (true)
+		yylex();
+	// system("pause");
+	return 0;
+}
+*/
 int yywrap()
 {
 	return 1;

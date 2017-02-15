@@ -9,27 +9,18 @@ namespace Hamster
 {
     namespace AST
     {
-        class ASTNode
-        {
-        };
+		class ASTNode
+		{
+		public:
+			ASTNode();
+			~ASTNode();
 
-        class ASTStringValue
-        {
-        public:
-            std::string value;
-        };
+			void virtual print();
+		};
 
-        class ASTImport
-        {
-        public:
-            std::string packageName;
-        };
+		
+		
 
-        class ASTGuidance
-        {
-        public:
-            std::string name;
-        };
     }
 }
 

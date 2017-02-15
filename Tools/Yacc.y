@@ -11,6 +11,8 @@ int yyerror(const char *);
 
 %code requires {
 #include "AST/Node.h"
+#include "AST/ASTGuidance.h"
+#include "AST/ASTImport.h"
 
 using namespace std;
 using namespace Hamster::AST;
@@ -29,24 +31,31 @@ using namespace Hamster::AST;
 %type <String> IMPORT
 %type <String> SEPARATED
 %type <Import> import
-%type <Guidance> package
+%type <Guidance> package_name
 
 %%
 file : import
 ;
-import : IMPORT NAME package {
+import : IMPORT package_name {
 		$$ = new Hamster::AST::ASTImport();
 		$$->packageName = $2;
-		// MC::log(MC::toStr("Import S1 ", $1), GARY);
-		MC::log(MC::toStr("", $$->packageName), GARY);
+		$$->print();
 	}
 ;
-package : SEPARATED NAME package {
+package_name : TOKEN package_name {
 		$$ = new Hamster::AST::ASTGuidance();
-		$$->name = $2;
-		MC::log(MC::toStr("", $$->name), GARY);
+		$$->name = $1;
+		$$->next = $2;
+		$$->print();
 	}
-	| END
+	| SEPARATED package_name { 
+		$$ = nullptr;
+		MC::log("Separated ", BLUE); 
+	}
+	| END { 
+		$$ = nullptr;
+		MC::log("End", BLUE); 
+	}
 ;
 %%
 

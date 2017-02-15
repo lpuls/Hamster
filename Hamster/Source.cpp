@@ -2,7 +2,9 @@
 
 int main()
 {
-    while (true)
-        yyparse();
+	while (true)
+	{
+		yyparse();
+	}
     return 0;
 }

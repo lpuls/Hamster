@@ -44,6 +44,8 @@ extern int yydebug;
 #line 12 "Tools\\Yacc.y"
 
 #include "AST/Node.h"
+#include "AST/ASTGuidance.h"
+#include "AST/ASTImport.h"
 
 using namespace std;
 using namespace Hamster::AST;
@@ -51,7 +53,7 @@ using namespace Hamster::AST;
 
 
 /* Line 2058 of yacc.c  */
-#line 55 "Yacc.tab.h"
+#line 57 "Yacc.tab.h"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -72,15 +74,16 @@ using namespace Hamster::AST;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 20 "Tools\\Yacc.y"
+#line 22 "Tools\\Yacc.y"
 
     int Int;
     char* String;
 	ASTImport* Import;
+	ASTGuidance* Guidance;
 
 
 /* Line 2058 of yacc.c  */
-#line 84 "Yacc.tab.h"
+#line 87 "Yacc.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
