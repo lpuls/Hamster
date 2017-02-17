@@ -17,7 +17,6 @@ std::string ASTImport::print()
 	if (nullptr == _packageName)
 		return "error: package name is nullptr";
     std::string log = "Import " + _packageName->print();
-    // MC::log(log, DARK_GREEN);
     return log;
 }
 

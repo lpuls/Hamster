@@ -41,8 +41,10 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 2058 of yacc.c  */
-#line 12 "Tools\\Yacc.y"
+#line 13 "Tools\\Yacc.y"
 
+#include "Yacc/Bison.h"
+#include "AST/ASTBody.h"
 #include "AST/ASTNode.h"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
@@ -50,11 +52,12 @@ extern int yydebug;
 
 using namespace std;
 using namespace Hamster::AST;
+using namespace Hamster::Yacc;
 
 
 
 /* Line 2058 of yacc.c  */
-#line 58 "Yacc.tab.h"
+#line 61 "Yacc.tab.h"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -63,7 +66,10 @@ using namespace Hamster::AST;
       know about them.  */
    enum yytokentype {
      IDENTIFIER = 258,
-     IMPORT = 259
+     IMPORT = 259,
+     PACKAGE = 260,
+     ENUM = 261,
+     STRUCE = 262
    };
 #endif
 
@@ -72,15 +78,17 @@ using namespace Hamster::AST;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 27 "Tools\\Yacc.y"
+#line 31 "Tools\\Yacc.y"
 
     int Int;
     char* String;
+	ASTNode* Node;
+	ASTBody* Body;
 	ASTGuidance* Guidance;
 
 
 /* Line 2058 of yacc.c  */
-#line 84 "Yacc.tab.h"
+#line 92 "Yacc.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

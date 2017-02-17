@@ -3,7 +3,8 @@
 
 Hamster::AST::ASTPackage::ASTPackage()
 {
-    packageName = nullptr;
+    _packageName = nullptr;
+	_body = new ASTBody();
 }
 
 Hamster::AST::ASTPackage::~ASTPackage()
@@ -12,12 +13,26 @@ Hamster::AST::ASTPackage::~ASTPackage()
 
 string Hamster::AST::ASTPackage::print()
 {
-    string log = "Package ";
-    if (nullptr != packageName)
-    {
-        MC::toStr(log, packageName->print());
-        MC::toStr(log, " ");
-    }
-    MC::log(log, DARK_GREEN);
-    return log;
+	if (nullptr == _packageName)
+		return "error: package name is nullptr";
+	std::string log = "Package " + _packageName->print() + "\n";
+	std::string body = _body->print();
+	return log + body;
+}
+
+void Hamster::AST::ASTPackage::release()
+{
+	if (nullptr != _packageName)
+	{
+		_packageName->release();
+		delete(_packageName);
+	}
+	_packageName = nullptr;
+
+	if (nullptr != _body)
+	{
+		_body->release();
+		delete(_body);
+	}
+	_body = nullptr;
 }

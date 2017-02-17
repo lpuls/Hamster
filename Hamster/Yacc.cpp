@@ -65,7 +65,6 @@
 /* Line 371 of yacc.c  */
 #line 1 "Tools\\Yacc.y"
 
-
 #include "Tool.h"
 
 #include <string>
@@ -74,8 +73,10 @@
 int yylex();
 int yyerror(const char *);
 
+
+
 /* Line 371 of yacc.c  */
-#line 79 "Yacc.tab.c"
+#line 80 "Yacc.tab.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -106,8 +107,10 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 387 of yacc.c  */
-#line 12 "Tools\\Yacc.y"
+#line 13 "Tools\\Yacc.y"
 
+#include "Yacc/Bison.h"
+#include "AST/ASTBody.h"
 #include "AST/ASTNode.h"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
@@ -115,11 +118,12 @@ extern int yydebug;
 
 using namespace std;
 using namespace Hamster::AST;
+using namespace Hamster::Yacc;
 
 
 
 /* Line 387 of yacc.c  */
-#line 123 "Yacc.tab.c"
+#line 127 "Yacc.tab.c"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -128,7 +132,10 @@ using namespace Hamster::AST;
       know about them.  */
    enum yytokentype {
      IDENTIFIER = 258,
-     IMPORT = 259
+     IMPORT = 259,
+     PACKAGE = 260,
+     ENUM = 261,
+     STRUCE = 262
    };
 #endif
 
@@ -137,15 +144,17 @@ using namespace Hamster::AST;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 27 "Tools\\Yacc.y"
+#line 31 "Tools\\Yacc.y"
 
     int Int;
     char* String;
+	ASTNode* Node;
+	ASTBody* Body;
 	ASTGuidance* Guidance;
 
 
 /* Line 387 of yacc.c  */
-#line 149 "Yacc.tab.c"
+#line 158 "Yacc.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -173,7 +182,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 177 "Yacc.tab.c"
+#line 186 "Yacc.tab.c"
 
 #ifdef short
 # undef short
@@ -391,22 +400,22 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  5
+#define YYFINAL  8
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   5
+#define YYLAST   17
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  7
+#define YYNTOKENS  12
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  4
+#define YYNRULES  7
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  9
+#define YYNSTATES  16
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   259
+#define YYMAXUTOK   262
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -418,8 +427,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     6,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     5,
+       2,     2,     2,     2,     2,     2,    11,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     8,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     9,     2,    10,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -432,14 +448,8 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3,     4
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5,     6,     7
 };
 
 #if YYDEBUG
@@ -447,20 +457,21 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     7,     9
+       0,     0,     3,     5,     8,    12,    18,    20
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-       8,     0,    -1,     4,     9,     5,    -1,     3,    -1,     9,
-       6,     3,    -1
+      13,     0,    -1,    14,    -1,    13,    14,    -1,     4,    15,
+       8,    -1,     5,    15,     9,    13,    10,    -1,     3,    -1,
+      15,    11,     3,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    39,    39,    54,    61
+       0,    46,    46,    50,    56,    62,    73,    79
 };
 #endif
 
@@ -469,8 +480,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "IDENTIFIER", "IMPORT", "';'", "'.'",
-  "$accept", "translation_unit", "package_name", YY_NULL
+  "$end", "error", "$undefined", "IDENTIFIER", "IMPORT", "PACKAGE",
+  "ENUM", "STRUCE", "';'", "'{'", "'}'", "'.'", "$accept",
+  "translation_unit", "declaration", "package_name", YY_NULL
 };
 #endif
 
@@ -479,20 +491,21 @@ static const char *const yytname[] =
    token YYLEX-NUM.  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,    59,    46
+       0,   256,   257,   258,   259,   260,   261,   262,    59,   123,
+     125,    46
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     7,     8,     9,     9
+       0,    12,    13,    13,    14,    14,    15,    15
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     3,     1,     3
+       0,     2,     1,     2,     3,     5,     1,     3
 };
 
 /* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
@@ -500,27 +513,29 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     3,     0,     1,     2,     0,     4
+       0,     0,     0,     0,     2,     6,     0,     0,     1,     3,
+       4,     0,     0,     7,     0,     5
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     4
+      -1,     3,     4,     6
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -6
+#define YYPACT_NINF -5
 static const yytype_int8 yypact[] =
 {
-      -2,     0,     4,    -6,    -5,    -6,    -6,     2,    -6
+       5,    10,    10,     1,    -5,    -5,    -4,     3,    -5,    -5,
+      -5,    12,     5,    -5,    -2,    -5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -6
+      -5,     4,    -3,    15
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -529,25 +544,28 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       6,     7,     1,     3,     5,     8
+       9,     8,     1,     2,    10,     1,     2,    11,    15,     1,
+       2,     9,    12,     5,    11,    13,    14,     7
 };
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-6)))
+  (!!((Yystate) == (-5)))
 
 #define yytable_value_is_error(Yytable_value) \
   YYID (0)
 
 static const yytype_uint8 yycheck[] =
 {
-       5,     6,     4,     3,     0,     3
+       3,     0,     4,     5,     8,     4,     5,    11,    10,     4,
+       5,    14,     9,     3,    11,     3,    12,     2
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     4,     8,     3,     9,     0,     5,     6,     3
+       0,     4,     5,    13,    14,     3,    15,    15,     0,    14,
+       8,    11,     9,     3,    13,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1349,55 +1367,72 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 39 "Tools\\Yacc.y"
-    {
-			LOG_WARNING(MC::toStr("Package Name ", (yyvsp[(2) - (3)].Guidance))); 
-			ASTImport* import = new ASTImport();
-			import->setPackageName((yyvsp[(2) - (3)].Guidance));
-			std::string log = import->print();
-			LOG_INFO(log);
-			if (nullptr != import)
-			{
-				import->release();
-				delete(import);
-			}
-			import = nullptr;
-		}
+#line 46 "Tools\\Yacc.y"
+    { 
+		Bison::getInstance()->getBody()->addStatement((yyvsp[(1) - (1)].Node)); 
+		Bison::getInstance()->getBody()->print();
+	}
     break;
 
   case 3:
 /* Line 1792 of yacc.c  */
-#line 54 "Tools\\Yacc.y"
+#line 50 "Tools\\Yacc.y"
+    {
+		Bison::getInstance()->getBody()->addStatement((yyvsp[(2) - (2)].Node)); 
+		Bison::getInstance()->getBody()->print();
+	}
+    break;
+
+  case 4:
+/* Line 1792 of yacc.c  */
+#line 56 "Tools\\Yacc.y"
+    {
+			LOG_WARNING(MC::toStr("Package Name ", (yyvsp[(2) - (3)].Guidance)->print())); 
+			ASTImport* import = new ASTImport();
+			import->setPackageName((yyvsp[(2) - (3)].Guidance));
+			(yyval.Node) = import;
+		}
+    break;
+
+  case 5:
+/* Line 1792 of yacc.c  */
+#line 62 "Tools\\Yacc.y"
+    {
+			ASTPackage* package = new ASTPackage();
+			package->setPackageName((yyvsp[(2) - (5)].Guidance));
+			package->setBody((yyvsp[(4) - (5)].Body));  // ->addStatement($4);
+			(yyval.Node) = package;
+			LOG_INFO("PACKAGE BODY ", (yyvsp[(4) - (5)].Body)->print());
+			std::string log = package->print();
+			LOG_INFO(log);
+		}
+    break;
+
+  case 6:
+/* Line 1792 of yacc.c  */
+#line 73 "Tools\\Yacc.y"
     { 
 			LOG_WARNING(MC::toStr("Identifier ", (yyvsp[(1) - (1)].String))); 
 			ASTGuidance* packageName = new ASTGuidance();
-			// packageName->setName($1);
 			packageName->addNext((yyvsp[(1) - (1)].String));
 			(yyval.Guidance) = packageName;
 		}
     break;
 
-  case 4:
+  case 7:
 /* Line 1792 of yacc.c  */
-#line 61 "Tools\\Yacc.y"
+#line 79 "Tools\\Yacc.y"
     { 
 			LOG_WARNING(MC::toStr("$1 Package Name . Identifier ", (yyvsp[(1) - (3)].Guidance)->print())); 
 			LOG_WARNING(MC::toStr("$3 Package Name . Identifier ", (yyvsp[(3) - (3)].String))); 
 			(yyval.Guidance)->addNext((yyvsp[(3) - (3)].String));
-			/*
-			ASTGuidance* packageName = new ASTGuidance();
-			packageName->setName($3);
-			packageName->setNext(nullptr);
-			$1->getNext()->setNext(packageName);
-			$$ = $1;
-			*/
 			LOG_WARNING(MC::toStr("$1 again Package Name . Identifier ", (yyvsp[(1) - (3)].Guidance)->print())); 
 		}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1401 "Yacc.tab.c"
+#line 1436 "Yacc.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1629,12 +1664,6 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 75 "Tools\\Yacc.y"
+#line 86 "Tools\\Yacc.y"
 
 
-int yyerror(const char *msg)
-{
-	LOG_ERROR(msg);
-	system("pause");
-	return 0;
-}

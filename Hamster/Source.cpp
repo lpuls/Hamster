@@ -1,15 +1,21 @@
 #include "Yacc.h"
+#include "Yacc/Bison.h"
 #include "AST/ASTValue.h"
 
 #define __YACC__
 
+using namespace Hamster::Yacc;
+
 int main()
 {
 #ifdef __YACC__
-	while (true)
+	yyparse();
+	if (nullptr != Bison::getInstance()->getBody())
 	{
-		yyparse();
+		Bison::getInstance()->getBody()->print();
+		Bison::getInstance()->getBody()->release();
 	}
+	delete(Bison::getInstance());
 #else
 
 	Hamster::AST::ASTValue *value = new Hamster::AST::ASTValue();
