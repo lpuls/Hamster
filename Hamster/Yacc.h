@@ -51,11 +51,10 @@ extern int yydebug;
 using namespace std;
 using namespace Hamster::AST;
 
-// %token IMPORT TOKEN SEPARATED END PACKAGE
 
 
 /* Line 2058 of yacc.c  */
-#line 59 "Yacc.tab.h"
+#line 58 "Yacc.tab.h"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -63,12 +62,8 @@ using namespace Hamster::AST;
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     ASSIGN = 258,
-     IMPORT = 259,
-     TOKEN = 260,
-     SEPARATED = 261,
-     END = 262,
-     PACKAGE = 263
+     IDENTIFIER = 258,
+     IMPORT = 259
    };
 #endif
 
@@ -77,17 +72,15 @@ using namespace Hamster::AST;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 31 "Tools\\Yacc.y"
+#line 27 "Tools\\Yacc.y"
 
     int Int;
     char* String;
-	ASTImport* Import;
 	ASTGuidance* Guidance;
-	ASTPackage* Package;
 
 
 /* Line 2058 of yacc.c  */
-#line 91 "Yacc.tab.h"
+#line 84 "Yacc.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

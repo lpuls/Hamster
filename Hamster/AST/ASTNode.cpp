@@ -16,4 +16,9 @@ std::string ASTNode::print()
     return "Just Node";
 }
 
+void ASTNode::release()
+{
+
+}
+
 

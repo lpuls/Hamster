@@ -2,6 +2,7 @@
 #define __AST_GUIDANCE__
 
 #include "ASTNode.h"
+#include "../Tool.h"
 
 #include <vector>
 #include <string>
@@ -17,13 +18,15 @@ namespace Hamster
 			ASTGuidance();
 			~ASTGuidance();
 
-			std::string name;
-			ASTGuidance* next;
-
 			std::string virtual print() override;
+			void virtual release() override;
 
+			void addNext(std::string name);
+			std::string getNext(int index);
+			int getCount();
 
         private:
+			std::vector<string> _next;
 		};
 
 	}

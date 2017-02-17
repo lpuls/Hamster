@@ -5,22 +5,28 @@ using namespace Hamster::AST;
 
 ASTImport::ASTImport()
 {
-	// packageName = nullptr;
+	_packageName = nullptr;
 }
 
 ASTImport::~ASTImport()
 {
-    /*
-	if (nullptr != packageName)
-	    delete(packageName);
-	packageName = nullptr;
-    */
 }
 
 std::string ASTImport::print()
 {
-    std::string log = "Import " + packageName;
-    // MC::toStr(log, packageName);
-    MC::log(log, DARK_GREEN);
+	if (nullptr == _packageName)
+		return "error: package name is nullptr";
+    std::string log = "Import " + _packageName->print();
+    // MC::log(log, DARK_GREEN);
     return log;
+}
+
+void ASTImport::release()
+{
+	if (nullptr != _packageName)
+	{
+		_packageName->release();
+		delete(_packageName);
+	}
+	_packageName = nullptr;
 }

@@ -1,5 +1,6 @@
 #include "Flex.h"
 #include "../Tool.h"
+#include "../Yacc.h"
 
 #include <iostream>
 using namespace std;

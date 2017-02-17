@@ -18,10 +18,14 @@ namespace Hamster
 			ASTImport();
 			~ASTImport();
 
-			// ASTGuidance* packageName;
-            std::string packageName;
-
 			std::string virtual print() override;
+			void virtual release() override;
+
+			SET(ASTGuidance*, _packageName, PackageName);
+			GET(ASTGuidance*, _packageName, PackageName);
+
+		private: 
+			ASTGuidance* _packageName;
 
 		};
 	}

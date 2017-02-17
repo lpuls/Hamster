@@ -18,73 +18,60 @@ int yyerror(const char *);
 using namespace std;
 using namespace Hamster::AST;
 
-// %token IMPORT TOKEN SEPARATED END PACKAGE
 }
 
-%token <String> ASSIGN
+%token <String> IDENTIFIER
 %token <String> IMPORT
-%token <String> TOKEN
-%token <String> SEPARATED
-%token <String> END
-%token <String> PACKAGE
+
 
 %union {
     int Int;
     char* String;
-	ASTImport* Import;
 	ASTGuidance* Guidance;
-	ASTPackage* Package;
 }
 
-
-%type <Import> import
-%type <Guidance> package_name
-%type <Package> package
+%type <String> translation_unit;
+%type <Guidance> package_name;
+%start translation_unit
 
 %%
-file : import
-	| package
-;
-import : IMPORT package_name {
-		auto node = new Hamster::AST::ASTImport();
-		std::string packageName = $2->name;
-		node->packageName = packageName;
-		MC::log(typeid($2).name(), BLUE);
-		MC::log(packageName, RED);
-		node->print();
-		$$ = node;
-	}
-;
-package : PACKAGE package_name {
-		// $$ = new Hamster::AST::ASTPackage();
-		// $$->packageName = $2;
-		// $$->print();
-	}
-package_name : TOKEN package_name {
-		auto node = new Hamster::AST::ASTGuidance();
-		node->name = $1;
-		node->next = $2;
-		node->print();
-		$$ = node;
-		// MC::log(typeid($1).name(), BLUE);
-		// MC::log(typeid($2).name(), BLUE);
-		// MC::log(MC::toStr("Token ", $1), RED); 
-		// MC::log(MC::toStr("package_name ", $2), RED); 
-	}
-	| SEPARATED package_name { 
-		// $$ = $2;
-		auto I = $$;
-		auto II = $1;
-		auto III = $2;
-		MC::log(MC::toStr("Separated ", $2), RED); 
-	}
-	| END  { 
-		$$ = nullptr; 
-		auto I = $$;
-		auto II = $1;
-		MC::log($1, RED); 
-	}
-;
+translation_unit
+	: IMPORT package_name ';' {
+			LOG_WARNING(MC::toStr("Package Name ", $2)); 
+			ASTImport* import = new ASTImport();
+			import->setPackageName($2);
+			std::string log = import->print();
+			LOG_INFO(log);
+			if (nullptr != import)
+			{
+				import->release();
+				delete(import);
+			}
+			import = nullptr;
+		}
+	;
+package_name
+	: IDENTIFIER { 
+			LOG_WARNING(MC::toStr("Identifier ", $1)); 
+			ASTGuidance* packageName = new ASTGuidance();
+			// packageName->setName($1);
+			packageName->addNext($1);
+			$$ = packageName;
+		}
+	| package_name '.' IDENTIFIER { 
+			LOG_WARNING(MC::toStr("$1 Package Name . Identifier ", $1->print())); 
+			LOG_WARNING(MC::toStr("$3 Package Name . Identifier ", $3)); 
+			$$->addNext($3);
+			/*
+			ASTGuidance* packageName = new ASTGuidance();
+			packageName->setName($3);
+			packageName->setNext(nullptr);
+			$1->getNext()->setNext(packageName);
+			$$ = $1;
+			*/
+			LOG_WARNING(MC::toStr("$1 again Package Name . Identifier ", $1->print())); 
+		}
+	;
 %%
 
 int yyerror(const char *msg)

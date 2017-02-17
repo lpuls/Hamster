@@ -10,49 +10,19 @@
 using namespace Hamster::FLEX;
 %}
 
-package package
-import import
-char [A-Za-z]|[_]
+char [A-Za-z_]
 num [0-9]
-assign [=]
-token {char}+
-space [\t|\n|" "]
-separated [\.]
-end [;]
 
 %%
-{package} {
-	yylval.String = yytext;
-	LOG_INFO(MC::toStr("PACKAGE: ", yytext));
-	return PACKAGE;
+[ \t\v\n\f]		{}
+"import" { return IMPORT; }
+{char}({char}|{num})* { 
+	yylval.String = yytext; 
+	return IDENTIFIER; 
 }
-{import} {
-	yylval.String = yytext;
-	LOG_INFO(MC::toStr("IMPORT: ", yytext));
-	return IMPORT;
-}
-{separated} {
-	// yylval.String = "";  // yytext;
-	LOG_INFO(MC::toStr("SEPARATED: ", yytext));
-	return SEPARATED; 
-}
-{token} {
-	yylval.String = yytext;
-	LOG_INFO(MC::toStr("TOKEN: ", yytext));
-	return TOKEN;
-}
-{assign} { 
-	yylval.String = yytext;
-	LOG_INFO(MC::toStr("ASSIGN: ", yytext));
-	return ASSIGN;
-}
-{space} {
-}
-{end} {
-	yylval.String = remove(yylval.String, ';');
-	LOG_INFO(MC::toStr("END: ", yylval.String));
-	return END;
-}
+"." { return('.'); }
+";" { return(';'); }
+
 %%
 /*
 int main()

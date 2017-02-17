@@ -5,26 +5,39 @@ using namespace Hamster::AST;
 
 ASTGuidance::ASTGuidance()
 {
-	name = "";
-	next = nullptr;
+	// _name = "";
+	// _next = nullptr;
 }
 
 ASTGuidance::~ASTGuidance()
 {
-	if (nullptr != next)
-		delete(next);
-	next = nullptr;
 }
 
+void ASTGuidance::addNext(std::string name)
+{
+	_next.push_back(name);
+}
+
+std::string ASTGuidance::getNext(int index)
+{
+	if (index >= 0 && index < _next.size())
+		return _next[index];
+	return "";
+}
+int ASTGuidance::getCount()
+{
+	return _next.size();
+}
 
 std::string ASTGuidance::print()
 {
-    std::string log = ""; // "Package Name Park: ";
-    if (nullptr != next)
-    {
-        MC::toStr(log, next->print());
-        MC::toStr(log, " ");
-    }
-    MC::log(MC::toStr(log, name), DARK_GREEN);
+	std::string log = "";
+	for (int i = 0; i < _next.size(); i++)
+        log = log + " " + _next[i]; 
     return log;
+}
+
+void ASTGuidance::release()
+{
+	_next.clear();
 }

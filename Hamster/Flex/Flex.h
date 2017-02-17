@@ -1,5 +1,5 @@
-#ifndef __FLEX__
-#define __FLEX__
+#ifndef __HAMSTER_FLEX__
+#define __HAMSTER_FLEX__
 
 #include <string>
 #include <iostream>
@@ -11,6 +11,8 @@ namespace Hamster
     namespace FLEX
     {
         char* remove(char* str, char target);
+
+		// yytokentype addProcess(char* str);
     }
 }
 
