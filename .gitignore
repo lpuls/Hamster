@@ -46,3 +46,12 @@
 **.suo
 **.vcxproj
 **.filters
+/Debug
+/Hamster.VC.db
+/Hamster.VC.VC.opendb
+/Yacc.output
+/Hamster/Debug/Hamster.tlog
+/Hamster/Debug/Hamster.log
+/Hamster/Debug/*
+/Hamster/Debug/*.log
+/Hamster/Debug
