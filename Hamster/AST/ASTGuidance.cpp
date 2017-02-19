@@ -29,11 +29,14 @@ int ASTGuidance::getCount()
 	return _next.size();
 }
 
-std::string ASTGuidance::print()
+std::string ASTGuidance::toString()
 {
 	std::string log = "";
-	for (int i = 0; i < _next.size(); i++)
-        log = log + " " + _next[i]; 
+    if (_next.size() > 0)
+        log = _next[0];
+	for (int i = 1; i < _next.size(); i++)
+        log = log + "." + _next[i]; 
+    log += ";";
     return log;
 }
 

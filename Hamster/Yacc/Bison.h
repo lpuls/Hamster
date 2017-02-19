@@ -1,8 +1,8 @@
 #ifndef __HAMSTER_BISON__
 #define __HAMSTER_BISON__
 
-#include "../AST/ASTBody.h"
 #include "../Tool.h"
+#include "../AST/ASTBody.h"
 
 namespace Hamster
 {
@@ -12,18 +12,22 @@ namespace Hamster
 		class Bison
 		{
 		public:
-			static Bison* getInstance();
-
 			~Bison();
+			
+            static Bison* getInstance();
 
-			GET(AST::ASTBody*, _mainCode, Body);
+            void toFile(std::string fileName);
 
+            GET(AST::ASTBody*, _body, Body);
 		private:
-			AST::ASTBody* _mainCode;
 
 			static Bison* _instance;
 
+            AST::ASTBody* _body;
+
 			Bison();
+
+
 		};
 	}
 }

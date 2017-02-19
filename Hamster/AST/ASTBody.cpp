@@ -27,13 +27,13 @@ int ASTBody::getStatementCount()
 	return _body.size();
 }
 
-std::string ASTBody::print()
+std::string ASTBody::toString()
 {
-	std::string log = "Body: \n";
+	std::string log = "";
 	for (int i = 0; i < _body.size(); i++)
 	{
 		ASTNode* child = _body[i];
-		log = log + child->print() + "\n";
+		log = log + child->toString() + "\n";
 	}
 	return log;
 }

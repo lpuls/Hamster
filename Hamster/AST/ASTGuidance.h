@@ -18,7 +18,7 @@ namespace Hamster
 			ASTGuidance();
 			~ASTGuidance();
 
-			std::string virtual print() override;
+			std::string virtual toString() override;
 			void virtual release() override;
 
 			void addNext(std::string name);

@@ -12,11 +12,11 @@ ASTImport::~ASTImport()
 {
 }
 
-std::string ASTImport::print()
+std::string ASTImport::toString()
 {
 	if (nullptr == _packageName)
-		return "error: package name is nullptr";
-    std::string log = "Import " + _packageName->print();
+		return "";
+    std::string log = "using namespace " + _packageName->toString();
     return log;
 }
 

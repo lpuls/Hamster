@@ -1,4 +1,6 @@
 #include "Bison.h"
+#include "../AST/ASTBody.h"
+#include <fstream>
 
 using namespace Hamster::Yacc;
 
@@ -13,15 +15,17 @@ Bison* Bison::getInstance()
 
 Bison::Bison()
 {
-	_mainCode = new AST::ASTBody();
+    _body = new Hamster::AST::ASTBody();
 }
 
 Bison::~Bison()
 {
-	if (nullptr != _mainCode)
-	{
-		_mainCode->release();
-		delete(_mainCode);
-	}
-	_mainCode = nullptr;
+}
+
+void Bison::toFile(std::string fileName)
+{
+    ofstream saveFile(fileName);
+    std::string code = _body->toString();
+    saveFile << code;
+    saveFile.close();
 }

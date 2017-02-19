@@ -20,7 +20,8 @@ namespace Hamster
 		{
 			STRING,
 			INTEGER,
-			DOUBLE
+			DOUBLE,
+            BOOL,
 		};
 
 		class ASTValue : public ASTNode

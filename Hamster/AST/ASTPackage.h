@@ -17,7 +17,7 @@ namespace Hamster
             ASTPackage();
             ~ASTPackage();
 
-			std::string virtual print() override;
+			std::string virtual toString() override;
 			void virtual release() override;
 
 			SET(ASTGuidance*, _packageName, PackageName);

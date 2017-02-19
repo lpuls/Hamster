@@ -20,32 +20,38 @@ num [0-9]
 %%
 [ \t\v\n\f]		{}
 "import" { 
-	LEX_LOG("IMPORT"); 
+	// LEX_LOG("IMPORT"); 
 	return IMPORT; 
 }
 "package" { 
-	LEX_LOG("PACKAGE"); 
+	// LEX_LOG("PACKAGE"); 
 	return PACKAGE; 
 }
+"class" {
+	return STRUCT;
+}
+"enum" {
+	return ENUM;
+}
 {char}({char}|{num})* { 
-	LEX_LOG("IDENTIFIER");
+	// LEX_LOG("IDENTIFIER");
 	yylval.String = yytext; 
 	return IDENTIFIER; 
 }
 "." { 
-	LEX_LOG("."); 
+	// LEX_LOG("."); 
 	return('.'); 
 }
 ";" { 
-	LEX_LOG(";"); 
+	// LEX_LOG(";"); 
 	return(';'); 
 }
 "{" { 
-	LEX_LOG("{"); 
+	// LEX_LOG("{"); 
 	return('{'); 
 }
 "}" { 
-	LEX_LOG("}"); 
+	// LEX_LOG("}"); 
 	return('}'); 
 }
 
@@ -77,7 +83,7 @@ void count()
 		else
 			column++;
 
-	// ECHO;
+	ECHO;
 }
 
 int yyerror(const char *msg)

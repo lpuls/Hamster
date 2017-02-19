@@ -10,7 +10,7 @@ ASTNode::~ASTNode()
 {
 }
 
-std::string ASTNode::print()
+std::string ASTNode::toString()
 {
     MC::log("Just Node", DARK_GREEN);
     return "Just Node";

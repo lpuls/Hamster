@@ -15,7 +15,7 @@ namespace Hamster
 			ASTNode();
 			~ASTNode();
 
-			std::string virtual print();
+			std::string virtual toString();
 			void virtual release();
 		};
 

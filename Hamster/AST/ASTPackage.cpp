@@ -4,20 +4,21 @@
 Hamster::AST::ASTPackage::ASTPackage()
 {
     _packageName = nullptr;
-	_body = new ASTBody();
+	// _body = new ASTBody();
 }
 
 Hamster::AST::ASTPackage::~ASTPackage()
 {
 }
 
-string Hamster::AST::ASTPackage::print()
+string Hamster::AST::ASTPackage::toString()
 {
 	if (nullptr == _packageName)
-		return "error: package name is nullptr";
-	std::string log = "Package " + _packageName->print() + "\n";
-	std::string body = _body->print();
-	return log + body;
+		return "";
+	std::string log = "namespace " + _packageName->toString() + "\n";
+	std::string body = _body->toString();
+    log = log + "{\n\t" + body + "\n}\t";
+	return log;
 }
 
 void Hamster::AST::ASTPackage::release()
