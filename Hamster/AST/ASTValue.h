@@ -30,6 +30,9 @@ namespace Hamster
 			ASTValue();
 			~ASTValue();
 
+            std::string virtual toString() override;
+            void virtual release() override;
+
 			GET(UASTValueType, _type, Type);
 			SET(UASTValueType, _type, Type);
 

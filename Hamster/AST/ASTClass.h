@@ -2,6 +2,7 @@
 #define __AST_CLASS__
 
 #include "ASTStruct.h"
+#include "ASTDef.h"
 
 namespace Hamster
 {
@@ -16,8 +17,12 @@ namespace Hamster
             std::string virtual toString() override;
             void virtual release() override;
 
-        private:
+            int getDefCount();
+            void addDef(ASTDef* def);
+            ASTDef* getDef(int index);
 
+        private:
+            std::vector<ASTDef*> _defs;
         };
     }
 }

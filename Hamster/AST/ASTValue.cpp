@@ -10,6 +10,29 @@ ASTValue::~ASTValue()
 {
 }
 
+std::string Hamster::AST::ASTValue::toString()
+{
+    std::string value = "";
+    switch (_type)
+    {
+    case UASTValueType::BOOL:
+        return "";
+    case UASTValueType::DOUBLE:
+        return MC::toStr(value, _value.Double) + ";";
+    case UASTValueType::INTEGER:
+        return MC::toStr(value, _value.Int) + ";";
+    case UASTValueType::STRING:
+        return MC::toStr(value, _value.String) + ";";
+    default:
+        return "";
+    }
+   
+}
+
+void Hamster::AST::ASTValue::release()
+{
+}
+
 void ASTValue::setValue(char* value)
 {
 	_value.String = value;
