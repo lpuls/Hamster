@@ -36,7 +36,6 @@ std::string ASTGuidance::toString()
         log = _next[0];
 	for (int i = 1; i < _next.size(); i++)
         log = log + "." + _next[i]; 
-    log += ";";
     return log;
 }
 

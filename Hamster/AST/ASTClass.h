@@ -15,14 +15,7 @@ namespace Hamster
             ~ASTClass();
 
             std::string virtual toString() override;
-            void virtual release() override;
 
-            int getDefCount();
-            void addDef(ASTDef* def);
-            ASTDef* getDef(int index);
-
-        private:
-            std::vector<ASTDef*> _defs;
         };
     }
 }

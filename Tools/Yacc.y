@@ -17,6 +17,8 @@ int yyerror(const char *);
 #include "AST/ASTStruct.h"
 #include "AST/ASTClass.h"
 #include "AST/ASTEnum.h"
+#include "AST/ASTDef.h"
+#include "AST/ASTClass"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
 #include "AST/ASTPackage.h"
@@ -36,6 +38,7 @@ using namespace Hamster::Yacc;
     char* String;
 	ASTNode* Node;
 	ASTBody* Body;
+	ASTDef* Def;
 	ASTStruct* Struct;
 	ASTGuidance* Guidance;
 }
@@ -45,7 +48,8 @@ using namespace Hamster::Yacc;
 %type <Node> declaration;
 %type <Body> package_body;
 %type <Struct> struct_or_enum;
-%type <Node> struct_or_enum_body;
+%type <Body> struct_or_enum_body;
+%type <Def> type;
 %start translation_unit
 
 %%
@@ -63,70 +67,76 @@ translation_unit
 	;
 declaration 
 	: IMPORT package_name ';' {
-		ASTImport* import = new ASTImport();
+		ASTImport * import = new ASTImport();
 		import->setPackageName($2);
 		$$ = import;
 	}
 	| PACKAGE package_name package_body {
-		ASTPackage* package = new ASTPackage();
+		ASTPackage * package = new ASTPackage();
 		package->setPackageName($2);
 		package->setBody($3);
 		$$ = package;
 	}
 	| struct_or_enum IDENTIFIER '{' struct_or_enum_body '}' {
 		$1->setName($2);
+		$1->setBody($4);
 		$$ = $1;
 	}
 	;
+struct_or_enum
+	: STRUCT {
+		ASTClass * astClass = new ASTClass();
+		$$ = astClass;
+	}
+	| ENUM {
+		ASTEnum * astEnum = new ASTEnum();
+		$$ = astEnum;
+	}
 struct_or_enum_body
-	: struct_or_enum_statement {
-		$$ = new ASTNode();
-	}
-	| struct_or_enum_body struct_or_enum_statement {
-		$$ = new ASTNode();
-	}
-	;
-struct_or_enum_statement
-	: enum_body ',' IDENTIFIER {
-	}
-	| struct_body {
-	}
-	;
-enum_body
-	: IDENTIFIER {
-	}
-	| enum_body ',' IDENTIFIER {
-	}
-	;
-struct_body
 	: type IDENTIFIER ';' {
+		if (nullptr == $$)
+			$$ = new ASTBody();
+		$1->setName($1);
+		$$->addStatement($1);
 	}
-	| struct_body ';' type IDENTIFIER ';' {
+	| struct_or_enum_body ';' type IDENTIFIER ';' {
+		if (nullptr == $$)
+			$$ = new ASTBody();
+		$3->setName($4);
+		$$->addStatement($3);
+
 	}
 	;
 type
 	: INTEGER {
+		ASTDef * def = new ASTDef();
+		def->setType("int");
+		$$ = def;
 	}
 	| FLOAT {
+		ASTDef * def = new ASTDef();
+		def->setType("float");
+		$$ = def;
 	} 
 	| STRING {
+		ASTDef * def = new ASTDef();
+		def->setType("string");
+		$$ = def;
 	} 
 	| BOOL {
+		ASTDef * def = new ASTDef();
+		def->setType("bool");
+		$$ = def;
 	} 
-	| LIST {
+	| IDENTIFIER {
+		ASTDef * def = new ASTDef();
+		def->setType($1);
+		$$ = def;
 	}
 	; 
-struct_or_enum
-	: STRUCT {
-		$$ = new ASTClass();
-	}
-	| ENUM { 
-		$$ = new ASTEnum(); 
-	}
-	;
 package_body
 	: '{' translation_unit '}' {
-		ASTBody* body = new ASTBody();
+		ASTBody * body = new ASTBody();
 		body->addStatement(body);
 		$$ = body;
 	}
@@ -137,7 +147,7 @@ package_body
 	;
 package_name
 	: IDENTIFIER { 
-		ASTGuidance* packageName = new ASTGuidance();
+		ASTGuidance * packageName = new ASTGuidance();
 		packageName->addNext($1);
 		$$ = packageName;
 	}

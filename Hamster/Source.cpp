@@ -1,5 +1,7 @@
 #include "Yacc.h"
 #include "Yacc/Bison.h"
+#include "AST/ASTPackage.h"
+#include "AST/ASTGuidance.h"
 #include "AST/ASTDef.h"
 #include "AST/ASTClass.h"
 
@@ -15,26 +17,68 @@ int main()
     Bison::getInstance()->toFile("G:\Code.txt");
 #else
 
-    ASTClass *astClass = new ASTClass();
+    ASTGuidance * guidance = new ASTGuidance();
+    guidance->addNext("Def");
+    guidance->addNext("Client");
+
+    ASTPackage * package = new ASTPackage();
+    package->setPackageName(guidance);
+
+    ASTBody * body = new ASTBody();
+    package->setBody(body);
+
+    ASTClass * astClass = new ASTClass();
     astClass->setName("Player");
-    ASTDef *def = new ASTDef();
+
+    ASTBody * classBody = new ASTBody();
+    astClass->setBody(classBody);
+
+    ASTDef * def = new ASTDef();
     def->setType("std::string");
     def->setName("name");
-    astClass->addDef(def);
+    classBody->addStatement(def);
+
 
     def = new ASTDef();
     def->setType("int");
     def->setName("age");
-    astClass->addDef(def);
+    classBody->addStatement(def);
 
     def = new ASTDef();
     def->setType("int");
     def->setName("id");
-    astClass->addDef(def);
+    classBody->addStatement(def);
 
-    LOG_INFO(astClass->toString());
-    delete(astClass);
-    astClass = nullptr;
+    body->addStatement(astClass);
+
+
+    ASTEnum * astEnum = new ASTEnum();
+    astEnum->setName("LoginResultCode");
+
+    ASTBody * enumBody = new ASTBody();
+    astEnum->setBody(enumBody);
+
+    ASTValue * value = new ASTValue();
+    value->setType(UASTValueType::STRING);
+    value->setValue("INVALED");
+    enumBody->addStatement(value);
+
+    value = new ASTValue();
+    value->setType(UASTValueType::STRING);
+    value->setValue("SUCCESS");
+    enumBody->addStatement(value);
+
+    value = new ASTValue();
+    value->setType(UASTValueType::STRING);
+    value->setValue("FAILED");
+    enumBody->addStatement(value);
+
+    body->addStatement(astEnum);
+
+    LOG_INFO(package->toString());
+    package->release();
+    delete(package);
+    package = nullptr;
 
 #endif
 

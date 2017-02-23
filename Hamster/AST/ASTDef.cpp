@@ -10,7 +10,7 @@ Hamster::AST::ASTDef::~ASTDef()
 
 std::string Hamster::AST::ASTDef::toString()
 {
-    std::string log = _type + " " + _name + ";\n";
+    std::string log = "public: " + _type + " " + _name + ";\n";
     return log;
 }
 

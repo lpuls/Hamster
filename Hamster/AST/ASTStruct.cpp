@@ -18,4 +18,10 @@ std::string Hamster::AST::ASTStruct::toString()
 
 void Hamster::AST::ASTStruct::release()
 {
+    if (nullptr != _body)
+    {
+        _body->release();
+        delete(_body);
+    }
+    _body = nullptr;
 }

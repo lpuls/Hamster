@@ -16,14 +16,6 @@ namespace Hamster
             ~ASTEnum();
 
             std::string virtual toString() override;
-            void virtual release() override;
-
-            void addEnum(ASTValue* enumValue);
-            ASTValue* getEnum(int index);
-            int getEnumCount();
-
-        private:
-            std::vector<ASTValue*> _enums;
         };
     }
 }
