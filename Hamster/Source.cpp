@@ -5,7 +5,7 @@
 #include "AST/ASTDef.h"
 #include "AST/ASTClass.h"
 
-// #define __YACC__
+#define __YACC__
 
 using namespace Hamster::Yacc;
 using namespace Hamster::AST;

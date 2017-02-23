@@ -19,6 +19,18 @@ num [0-9]
 
 %%
 [ \t\v\n\f]		{}
+"int" {
+	return yytokentype::INTEGER;
+}
+"float" {
+	return yytokentype::FLOAT;
+}
+"string" {
+	return yytokentype::STRING;
+}
+"bool" {
+	return yytokentype::BOOL;
+}
 "import" { 
 	// LEX_LOG("IMPORT"); 
 	return IMPORT; 

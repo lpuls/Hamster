@@ -18,7 +18,7 @@ int yyerror(const char *);
 #include "AST/ASTClass.h"
 #include "AST/ASTEnum.h"
 #include "AST/ASTDef.h"
-#include "AST/ASTClass"
+#include "AST/ASTClass.h"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
 #include "AST/ASTPackage.h"
@@ -30,7 +30,8 @@ using namespace Hamster::Yacc;
 }
 
 %token <String> IDENTIFIER
-%token IMPORT PACKAGE ENUM STRUCT INTEGER FLOAT STRING BOOL LIST 
+%token IMPORT PACKAGE ENUM STRUCT 
+%token INTEGER FLOAT STRING BOOL LIST 
 
 
 %union {
@@ -47,9 +48,6 @@ using namespace Hamster::Yacc;
 %type <Guidance> package_name;
 %type <Node> declaration;
 %type <Body> package_body;
-%type <Struct> struct_or_enum;
-%type <Body> struct_or_enum_body;
-%type <Def> type;
 %start translation_unit
 
 %%
@@ -77,67 +75,11 @@ declaration
 		package->setBody($3);
 		$$ = package;
 	}
-	| struct_or_enum IDENTIFIER '{' struct_or_enum_body '}' {
-		$1->setName($2);
-		$1->setBody($4);
-		$$ = $1;
-	}
 	;
-struct_or_enum
-	: STRUCT {
-		ASTClass * astClass = new ASTClass();
-		$$ = astClass;
-	}
-	| ENUM {
-		ASTEnum * astEnum = new ASTEnum();
-		$$ = astEnum;
-	}
-struct_or_enum_body
-	: type IDENTIFIER ';' {
-		if (nullptr == $$)
-			$$ = new ASTBody();
-		$1->setName($1);
-		$$->addStatement($1);
-	}
-	| struct_or_enum_body ';' type IDENTIFIER ';' {
-		if (nullptr == $$)
-			$$ = new ASTBody();
-		$3->setName($4);
-		$$->addStatement($3);
-
-	}
-	;
-type
-	: INTEGER {
-		ASTDef * def = new ASTDef();
-		def->setType("int");
-		$$ = def;
-	}
-	| FLOAT {
-		ASTDef * def = new ASTDef();
-		def->setType("float");
-		$$ = def;
-	} 
-	| STRING {
-		ASTDef * def = new ASTDef();
-		def->setType("string");
-		$$ = def;
-	} 
-	| BOOL {
-		ASTDef * def = new ASTDef();
-		def->setType("bool");
-		$$ = def;
-	} 
-	| IDENTIFIER {
-		ASTDef * def = new ASTDef();
-		def->setType($1);
-		$$ = def;
-	}
-	; 
 package_body
 	: '{' translation_unit '}' {
 		ASTBody * body = new ASTBody();
-		body->addStatement(body);
+		// body->addStatement(body);
 		$$ = body;
 	}
 	| '{' '}' {
