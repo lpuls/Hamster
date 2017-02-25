@@ -5,8 +5,8 @@
 #include <iostream>
 
 int yylex();
-int yyerror(const char *);
 
+int yyerror(const char *);
 
 %}
 
@@ -19,6 +19,7 @@ int yyerror(const char *);
 #include "AST/ASTEnum.h"
 #include "AST/ASTDef.h"
 #include "AST/ASTClass.h"
+#include "AST/ASTValue.h"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
 #include "AST/ASTPackage.h"
@@ -27,17 +28,21 @@ using namespace std;
 using namespace Hamster::AST;
 using namespace Hamster::Yacc;
 
+void yyInit();
+void yyOver();
 }
 
 %token <String> IDENTIFIER
 %token IMPORT PACKAGE ENUM STRUCT 
-%token INTEGER FLOAT STRING BOOL LIST 
+%token TYPE_STRING TYPE_INTEGER TYPE_FLOAT TYPE_BOOL
 
 
 %union {
     int Int;
     char* String;
+
 	ASTNode* Node;
+	ASTValue* Value;
 	ASTBody* Body;
 	ASTDef* Def;
 	ASTStruct* Struct;
@@ -48,20 +53,27 @@ using namespace Hamster::Yacc;
 %type <Guidance> package_name;
 %type <Node> declaration;
 %type <Body> package_body;
+%type <Def> declaration_specifiers;
 %start translation_unit
 
 %%
 translation_unit
 	: declaration {
-		Bison::getInstance()->getBody()->addStatement($1);
-		LOG_INFO($1->toString());
+		$$ = new ASTBody();
+		$$->addStatement($1);
+		// Bison::getInstance()->getBody()->addStatement($1);
+		LOG_INFO($$->toString());
+		LOG_INFO("\t");
 	}
-	| translation_unit declaration  {
-		Bison::getInstance()->getBody()->addStatement($1);
-		Bison::getInstance()->getBody()->addStatement($2);
-		LOG_INFO($2->toString());
+	| translation_unit declaration {
+		if (nullptr == $$)
+			$$ = new ASTBody();
+		$$->addStatement($2);
+		// Bison::body->addStatement($2);
+		// Bison::getInstance()->getBody()->addStatement($2);
+		LOG_INFO($$->toString());
+		LOG_INFO("\t");
 	}
-	
 	;
 declaration 
 	: IMPORT package_name ';' {
@@ -75,11 +87,22 @@ declaration
 		package->setBody($3);
 		$$ = package;
 	}
+	| declaration_specifiers ';' {
+		$$ = $1;
+	}
+	;
+declaration_specifiers
+	: TYPE_INTEGER IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("int");
+		astDef->setName($2);
+		$$ = astDef;
+	}
 	;
 package_body
 	: '{' translation_unit '}' {
 		ASTBody * body = new ASTBody();
-		// body->addStatement(body);
+		body->addStatement($2);
 		$$ = body;
 	}
 	| '{' '}' {

@@ -16,4 +16,12 @@ std::string Hamster::AST::ASTDef::toString()
 
 void Hamster::AST::ASTDef::release()
 {
+    /*
+    if (nullptr != _name)
+    {
+        _name->release();
+        delete(_name);
+    }
+    _name = nullptr;
+    */
 }

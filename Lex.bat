@@ -1,3 +1,5 @@
+del Code.txt
+del Yacc.output
 Tools\flex.exe Tools\Lex.l
 move lex.yy.c Hamster\Lex.cpp
 Tools\bison.exe -v -d Tools\Yacc.y

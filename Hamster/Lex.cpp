@@ -645,107 +645,113 @@ case 2:
 YY_RULE_SETUP
 #line 22 "Tools\\Lex.l"
 {
-	return yytokentype::INTEGER;
+	count();
+	return TYPE_INTEGER;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "Tools\\Lex.l"
+#line 26 "Tools\\Lex.l"
 {
-	return yytokentype::FLOAT;
+	count();
+	return TYPE_FLOAT;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "Tools\\Lex.l"
+#line 30 "Tools\\Lex.l"
 {
-	return yytokentype::STRING;
+	count();
+	return TYPE_STRING;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 31 "Tools\\Lex.l"
+#line 34 "Tools\\Lex.l"
 {
-	return yytokentype::BOOL;
+	count();
+	return TYPE_BOOL;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 34 "Tools\\Lex.l"
+#line 38 "Tools\\Lex.l"
 { 
-	// LEX_LOG("IMPORT"); 
+	count();
 	return IMPORT; 
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "Tools\\Lex.l"
+#line 42 "Tools\\Lex.l"
 { 
-	// LEX_LOG("PACKAGE"); 
+	count();
 	return PACKAGE; 
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 42 "Tools\\Lex.l"
+#line 46 "Tools\\Lex.l"
 {
+	count();
 	return STRUCT;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 45 "Tools\\Lex.l"
+#line 50 "Tools\\Lex.l"
 {
+	count();
 	return ENUM;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 48 "Tools\\Lex.l"
+#line 54 "Tools\\Lex.l"
 { 
-	// LEX_LOG("IDENTIFIER");
+	count();
 	yylval.String = yytext; 
 	return IDENTIFIER; 
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 53 "Tools\\Lex.l"
+#line 59 "Tools\\Lex.l"
 { 
-	// LEX_LOG("."); 
+	count(); 
 	return('.'); 
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "Tools\\Lex.l"
+#line 63 "Tools\\Lex.l"
 { 
-	// LEX_LOG(";"); 
+	count(); 
 	return(';'); 
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 61 "Tools\\Lex.l"
+#line 67 "Tools\\Lex.l"
 { 
-	// LEX_LOG("{"); 
+	count(); 
 	return('{'); 
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 "Tools\\Lex.l"
+#line 71 "Tools\\Lex.l"
 { 
-	// LEX_LOG("}"); 
+	count();
 	return('}'); 
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 70 "Tools\\Lex.l"
+#line 76 "Tools\\Lex.l"
 ECHO;
 	YY_BREAK
-#line 749 "lex.yy.c"
+#line 755 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1605,44 +1611,56 @@ int main()
 	return 0;
 	}
 #endif
-#line 70 "Tools\\Lex.l"
+#line 76 "Tools\\Lex.l"
 
-/*
-int main()
-{
-	while (true)
-		yylex();
-	// system("pause");
-	return 0;
-}
-*/
+
 int yywrap()
 {
 	return 1;
 }
 
+int line = 0;
 int column = 0;
 void count()
 {
 	int i;
 
 	for (i = 0; yytext[i] != '\0'; i++)
+	{	
 		if (yytext[i] == '\n')
+		{	
 			column = 0;
+			line += 1;
+		}
 		else if (yytext[i] == '\t')
+		{	
 			column += 8 - (column % 8);
+		}
 		else
+		{
 			column++;
+		}
+	}
+}
 
-	ECHO;
+void yyInit()
+{
+    fopen_s(&yyin, "G:/Code/C++/Hamster/Debug/1.txt", "r");
+}
+
+void yyOver()
+{
+	fclose(yyin);
 }
 
 int yyerror(const char *msg)
 {
 	string log = msg;
+	MC::toStr(log, "\tLine: ");
+	log = MC::toStr(log, line);
+	log = MC::toStr(log, "\tcolumn ");
 	log = MC::toStr(log, column);
 	LOG_ERROR(log);
-	// system("pause");
 	return 0;
 }
 

@@ -11,8 +11,8 @@ Hamster::AST::ASTEnum::~ASTEnum()
 std::string Hamster::AST::ASTEnum::toString()
 {
     std::string log = "enum " + _name + "\n{\n";
-
-    log += _body->toString();
+    if (nullptr != _body)
+        log += _body->toString();
     log += "\n}";
 
     return log;

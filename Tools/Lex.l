@@ -20,90 +20,108 @@ num [0-9]
 %%
 [ \t\v\n\f]		{}
 "int" {
-	return yytokentype::INTEGER;
+	count();
+	return TYPE_INTEGER;
 }
 "float" {
-	return yytokentype::FLOAT;
+	count();
+	return TYPE_FLOAT;
 }
 "string" {
-	return yytokentype::STRING;
+	count();
+	return TYPE_STRING;
 }
 "bool" {
-	return yytokentype::BOOL;
+	count();
+	return TYPE_BOOL;
 }
 "import" { 
-	// LEX_LOG("IMPORT"); 
+	count();
 	return IMPORT; 
 }
 "package" { 
-	// LEX_LOG("PACKAGE"); 
+	count();
 	return PACKAGE; 
 }
 "class" {
+	count();
 	return STRUCT;
 }
 "enum" {
+	count();
 	return ENUM;
 }
 {char}({char}|{num})* { 
-	// LEX_LOG("IDENTIFIER");
+	count();
 	yylval.String = yytext; 
 	return IDENTIFIER; 
 }
 "." { 
-	// LEX_LOG("."); 
+	count(); 
 	return('.'); 
 }
 ";" { 
-	// LEX_LOG(";"); 
+	count(); 
 	return(';'); 
 }
 "{" { 
-	// LEX_LOG("{"); 
+	count(); 
 	return('{'); 
 }
 "}" { 
-	// LEX_LOG("}"); 
+	count();
 	return('}'); 
 }
 
 %%
-/*
-int main()
-{
-	while (true)
-		yylex();
-	// system("pause");
-	return 0;
-}
-*/
+
 int yywrap()
 {
 	return 1;
 }
 
+int line = 0;
 int column = 0;
 void count()
 {
 	int i;
 
 	for (i = 0; yytext[i] != '\0'; i++)
+	{	
 		if (yytext[i] == '\n')
+		{	
 			column = 0;
+			line += 1;
+		}
 		else if (yytext[i] == '\t')
+		{	
 			column += 8 - (column % 8);
+		}
 		else
+		{
 			column++;
+		}
+	}
+}
 
-	ECHO;
+void yyInit()
+{
+    fopen_s(&yyin, "G:/Code/C++/Hamster/Debug/1.txt", "r");
+}
+
+void yyOver()
+{
+	fclose(yyin);
 }
 
 int yyerror(const char *msg)
 {
 	string log = msg;
+	MC::toStr(log, "\tLine: ");
+	log = MC::toStr(log, line);
+	log = MC::toStr(log, "\tcolumn ");
 	log = MC::toStr(log, column);
 	LOG_ERROR(log);
-	// system("pause");
 	return 0;
 }
 

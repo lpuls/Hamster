@@ -13,8 +13,10 @@ using namespace Hamster::AST;
 int main()
 {
 #ifdef __YACC__
+    yyInit();
 	yyparse();
-    Bison::getInstance()->toFile("G:\Code.txt");
+    yyOver();
+    Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");
 #else
 
     ASTGuidance * guidance = new ASTGuidance();

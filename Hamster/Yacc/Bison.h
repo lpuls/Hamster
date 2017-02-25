@@ -4,11 +4,11 @@
 #include "../Tool.h"
 #include "../AST/ASTBody.h"
 
+
 namespace Hamster
 {
 	namespace Yacc
 	{
-		// AST::ASTBody* mainCode = new AST::ASTBody();
 		class Bison
 		{
 		public:

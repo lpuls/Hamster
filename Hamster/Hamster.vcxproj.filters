@@ -19,6 +19,18 @@
     <Filter Include="头文件\AST">
       <UniqueIdentifier>{efad6f7d-d383-45f8-8429-809f5b70d0fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Yacc">
+      <UniqueIdentifier>{513372c5-9e50-43b9-a5c5-856001f64f2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Lex">
+      <UniqueIdentifier>{f6e6b8ec-6526-4fab-b3e1-21cc7f40a381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Lex">
+      <UniqueIdentifier>{7368e706-7c08-439f-8229-10619cc4395e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Yacc">
+      <UniqueIdentifier>{04a012e9-f790-46f3-b96f-2e03716fa262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -33,7 +45,40 @@
     <ClCompile Include="Source.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AST\Node.cpp">
+    <ClCompile Include="AST\ASTBody.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTGuidance.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTImport.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTNode.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTPackage.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTValue.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="Yacc\Bison.cpp">
+      <Filter>源文件\Yacc</Filter>
+    </ClCompile>
+    <ClCompile Include="Flex\Flex.cpp">
+      <Filter>源文件\Lex</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTStruct.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTClass.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTDef.cpp">
+      <Filter>源文件\AST</Filter>
+    </ClCompile>
+    <ClCompile Include="AST\ASTEnum.cpp">
       <Filter>源文件\AST</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +89,40 @@
     <ClInclude Include="Yacc.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AST\Node.h">
+    <ClInclude Include="AST\ASTPackage.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTValue.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTBody.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTGuidance.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTImport.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTNode.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Yacc\Bison.h">
+      <Filter>头文件\Yacc</Filter>
+    </ClInclude>
+    <ClInclude Include="Flex\Flex.h">
+      <Filter>头文件\Lex</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTStruct.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTClass.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTEnum.h">
+      <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="AST\ASTDef.h">
       <Filter>头文件\AST</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,6 +2,7 @@
 #define __AST_DEF__
 
 #include "ASTNode.h"
+#include "ASTValue.h"
 #include "../Tool.h"
 
 namespace Hamster

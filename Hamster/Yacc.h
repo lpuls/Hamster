@@ -51,6 +51,7 @@ extern int yydebug;
 #include "AST/ASTEnum.h"
 #include "AST/ASTDef.h"
 #include "AST/ASTClass.h"
+#include "AST/ASTValue.h"
 #include "AST/ASTGuidance.h"
 #include "AST/ASTImport.h"
 #include "AST/ASTPackage.h"
@@ -59,10 +60,12 @@ using namespace std;
 using namespace Hamster::AST;
 using namespace Hamster::Yacc;
 
+void yyInit();
+void yyOver();
 
 
 /* Line 2058 of yacc.c  */
-#line 66 "Yacc.tab.h"
+#line 69 "Yacc.tab.h"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -75,11 +78,10 @@ using namespace Hamster::Yacc;
      PACKAGE = 260,
      ENUM = 261,
      STRUCT = 262,
-     INTEGER = 263,
-     FLOAT = 264,
-     STRING = 265,
-     BOOL = 266,
-     LIST = 267
+     TYPE_STRING = 263,
+     TYPE_INTEGER = 264,
+     TYPE_FLOAT = 265,
+     TYPE_BOOL = 266
    };
 #endif
 
@@ -88,11 +90,13 @@ using namespace Hamster::Yacc;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 37 "Tools\\Yacc.y"
+#line 40 "Tools\\Yacc.y"
 
     int Int;
     char* String;
+
 	ASTNode* Node;
+	ASTValue* Value;
 	ASTBody* Body;
 	ASTDef* Def;
 	ASTStruct* Struct;
@@ -100,7 +104,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 104 "Yacc.tab.h"
+#line 108 "Yacc.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

@@ -13,7 +13,8 @@ ASTClass::~ASTClass()
 std::string Hamster::AST::ASTClass::toString()
 {
     std::string log = "class " + _name + "\n{\n";
-    log += _body->toString();
+    if (nullptr != _body)
+        log += _body->toString();
     log = log + "}\n";
     return log;
 }

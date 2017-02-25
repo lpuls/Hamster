@@ -64,16 +64,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AST\Node.cpp" />
+    <ClCompile Include="AST\ASTBody.cpp" />
+    <ClCompile Include="AST\ASTClass.cpp" />
+    <ClCompile Include="AST\ASTDef.cpp" />
+    <ClCompile Include="AST\ASTEnum.cpp" />
+    <ClCompile Include="AST\ASTGuidance.cpp" />
+    <ClCompile Include="AST\ASTImport.cpp" />
+    <ClCompile Include="AST\ASTNode.cpp" />
+    <ClCompile Include="AST\ASTPackage.cpp" />
+    <ClCompile Include="AST\ASTStruct.cpp" />
+    <ClCompile Include="AST\ASTValue.cpp" />
+    <ClCompile Include="Flex\Flex.cpp" />
     <ClCompile Include="Lex.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="Yacc.cpp" />
+    <ClCompile Include="Yacc\Bison.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AST\Node.h" />
+    <ClInclude Include="AST\ASTBody.h" />
+    <ClInclude Include="AST\ASTClass.h" />
+    <ClInclude Include="AST\ASTDef.h" />
+    <ClInclude Include="AST\ASTEnum.h" />
+    <ClInclude Include="AST\ASTGuidance.h" />
+    <ClInclude Include="AST\ASTImport.h" />
+    <ClInclude Include="AST\ASTNode.h" />
+    <ClInclude Include="AST\ASTPackage.h" />
+    <ClInclude Include="AST\ASTStruct.h" />
+    <ClInclude Include="AST\ASTValue.h" />
+    <ClInclude Include="Flex\Flex.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="Yacc.h" />
+    <ClInclude Include="Yacc\Bison.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Tools\Lex.l" />
