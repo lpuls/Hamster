@@ -1410,9 +1410,9 @@ yyreduce:
     {
 		(yyval.Body) = new ASTBody();
 		(yyval.Body)->addStatement((yyvsp[(1) - (1)].Node));
-		// Bison::getInstance()->getBody()->addStatement($1);
-		LOG_INFO((yyval.Body)->toString());
-		LOG_INFO("\t");
+		Bison::getInstance()->pushBody((yyval.Body));
+		// LOG_INFO($$->toString());
+		// LOG_INFO("\t");
 	}
     break;
 
@@ -1423,9 +1423,9 @@ yyreduce:
 		if (nullptr == (yyval.Body))
 			(yyval.Body) = new ASTBody();
 		(yyval.Body)->addStatement((yyvsp[(2) - (2)].Node));
-		// Bison::getInstance()->getBody()->addStatement($2);
-		LOG_INFO((yyval.Body)->toString());
-		LOG_INFO("\t");
+		// Bison::getInstance()->pushBody();
+		// LOG_INFO($$->toString());
+		// LOG_INFO("\t");
 	}
     break;
 

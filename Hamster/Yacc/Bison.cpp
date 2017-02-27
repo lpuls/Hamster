@@ -21,30 +21,36 @@ Bison::~Bison()
 {
 }
 
-void Bison::toFile(std::string fileName)
+void Bison::toFile(std::string fileName, std::string content)
 {
-    // ofstream saveFile(fileName);
-    // std::string code = _body->toString();
-    // saveFile << code;
-    // saveFile.close();
+    ofstream saveFile(fileName);
+    saveFile << content;
+    saveFile.close();
 }
 
 void Hamster::Yacc::Bison::pushBody(AST::ASTBody * body)
 {
-    _bodys.push(body);
+    _bodys.push_back(body);
 }
 
-Hamster::AST::ASTBody * Hamster::Yacc::Bison::popBody()
+Hamster::AST::ASTBody * Hamster::Yacc::Bison::getBody(int index)
 {
-    if (_bodys.size() <= 0)
-        return nullptr;
-
-    Hamster::AST::ASTBody * top = _bodys.top();
-    _bodys.pop();
-    return top;
+    if (index >= 0 && index < _bodys.size())
+        return _bodys[index];
+    return nullptr;
 }
 
-bool Hamster::Yacc::Bison::isBottom()
+int Hamster::Yacc::Bison::getBodys()
 {
-    return _bodys.size() == 1;
+    return _bodys.size();
+}
+
+void Hamster::Yacc::Bison::clear()
+{
+    if (0 < _bodys.size())
+    {
+        _bodys[0]->release();
+        _bodys[0] = nullptr;
+    }
+    _bodys.clear();
 }

@@ -66,17 +66,17 @@ translation_unit
 	: declaration {
 		$$ = new ASTBody();
 		$$->addStatement($1);
-		// Bison::getInstance()->getBody()->addStatement($1);
-		LOG_INFO($$->toString());
-		LOG_INFO("\t");
+		Bison::getInstance()->pushBody($$);
+		// LOG_INFO($$->toString());
+		// LOG_INFO("\t");
 	}
 	| translation_unit declaration {
 		if (nullptr == $$)
 			$$ = new ASTBody();
 		$$->addStatement($2);
-		// Bison::getInstance()->getBody()->addStatement($2);
-		LOG_INFO($$->toString());
-		LOG_INFO("\t");
+		// Bison::getInstance()->pushBody($$);
+		// LOG_INFO($$->toString());
+		// LOG_INFO("\t");
 	}
 	;
 declaration 

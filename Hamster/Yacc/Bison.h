@@ -4,7 +4,7 @@
 #include "../Tool.h"
 #include "../AST/ASTBody.h"
 
-#include <stack>
+#include <vector>
 
 namespace Hamster
 {
@@ -17,18 +17,19 @@ namespace Hamster
 			
             static Bison* getInstance();
 
-            void toFile(std::string fileName);
+            void toFile(std::string fileName, std::string content);
 
             void pushBody(AST::ASTBody* body);
-            AST::ASTBody* popBody();
-            bool isBottom();
+            AST::ASTBody* getBody(int index);
+            int getBodys();
+            void clear();
 
 		private:
 
 			static Bison* _instance;
 
             // AST::ASTBody* _body;
-            std::stack<AST::ASTBody*> _bodys;
+            std::vector<AST::ASTBody*> _bodys;
 
 			Bison();
 

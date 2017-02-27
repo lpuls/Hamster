@@ -4,6 +4,8 @@
 #include "AST/ASTGuidance.h"
 #include "AST/ASTDef.h"
 #include "AST/ASTClass.h"
+#include "AST/ASTBody.h"
+#include "Tool.h"
 
 #define __YACC__
 
@@ -14,8 +16,16 @@ int main()
 {
 #ifdef __YACC__
     yyInit();
-	yyparse();
+    yyparse();
     yyOver();
+    Hamster::AST::ASTBody * body = Bison::getInstance()->getBody(0);
+    if (nullptr != body)
+    {
+        std::string content = body->toString();
+        LOG_INFO(content);
+        Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt", content);
+    }
+    Bison::getInstance()->clear();
     // Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");
 #else
 
