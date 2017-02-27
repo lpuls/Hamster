@@ -1,4 +1,5 @@
 #include "Yacc.h"
+#include "ToFile/ToFile.h"
 #include "Yacc/Bison.h"
 #include "AST/ASTPackage.h"
 #include "AST/ASTGuidance.h"
@@ -7,10 +8,11 @@
 #include "AST/ASTBody.h"
 #include "Tool.h"
 
-#define __YACC__
+// #define __YACC__
 
-using namespace Hamster::Yacc;
+using namespace Hamster;
 using namespace Hamster::AST;
+using namespace Hamster::Yacc;
 
 int main()
 {
@@ -86,6 +88,9 @@ int main()
     enumBody->addStatement(value);
 
     body->addStatement(astEnum);
+
+    ToFile file;
+    file.toFile("", body, 0);
 
     LOG_INFO(package->toString());
     package->release();

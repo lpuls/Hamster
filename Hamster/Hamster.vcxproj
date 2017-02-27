@@ -77,6 +77,8 @@
     <ClCompile Include="Flex\Flex.cpp" />
     <ClCompile Include="Lex.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="ToFile\ToCsharp.cpp" />
+    <ClCompile Include="ToFile\ToFile.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="Yacc.cpp" />
     <ClCompile Include="Yacc\Bison.cpp" />
@@ -93,6 +95,8 @@
     <ClInclude Include="AST\ASTStruct.h" />
     <ClInclude Include="AST\ASTValue.h" />
     <ClInclude Include="Flex\Flex.h" />
+    <ClInclude Include="ToFile\ToCsharp.h" />
+    <ClInclude Include="ToFile\ToFile.h" />
     <ClInclude Include="Tool.h" />
     <ClInclude Include="Yacc.h" />
     <ClInclude Include="Yacc\Bison.h" />

@@ -31,6 +31,12 @@
     <Filter Include="头文件\Yacc">
       <UniqueIdentifier>{04a012e9-f790-46f3-b96f-2e03716fa262}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ToFile">
+      <UniqueIdentifier>{7d084e1e-bca5-4ec3-94dd-ef471ff5ee50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ToFile">
+      <UniqueIdentifier>{2f39aa4e-4b8b-4973-8feb-320b209337f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -81,6 +87,12 @@
     <ClCompile Include="AST\ASTEnum.cpp">
       <Filter>源文件\AST</Filter>
     </ClCompile>
+    <ClCompile Include="ToFile\ToFile.cpp">
+      <Filter>源文件\ToFile</Filter>
+    </ClCompile>
+    <ClCompile Include="ToFile\ToCsharp.cpp">
+      <Filter>源文件\ToFile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tool.h">
@@ -124,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="AST\ASTDef.h">
       <Filter>头文件\AST</Filter>
+    </ClInclude>
+    <ClInclude Include="ToFile\ToCsharp.h">
+      <Filter>头文件\ToFile</Filter>
+    </ClInclude>
+    <ClInclude Include="ToFile\ToFile.h">
+      <Filter>头文件\ToFile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
