@@ -1,0 +1,18 @@
+import System;
+import UnityEditor;
+package Def
+{
+    int a;
+
+    enum b 
+	{ 
+		VALUE0; 
+		VALUE1 
+	}
+
+	class c 
+	{
+		int d;
+		int e;
+	}
+}

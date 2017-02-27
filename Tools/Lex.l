@@ -18,7 +18,7 @@ char [A-Za-z_]
 num [0-9]
 
 %%
-[ \t\v\n\f]		{}
+[ \t\v\n\f]		{ count(); }
 "int" {
 	count();
 	return TYPE_INTEGER;
@@ -72,6 +72,18 @@ num [0-9]
 	count();
 	return('}'); 
 }
+"[" {
+	count();
+	return('['); 
+}
+"]" {
+	count();
+	return(']'); 
+}
+"=" {
+	count();
+	return('='); 
+}
 
 %%
 
@@ -80,8 +92,8 @@ int yywrap()
 	return 1;
 }
 
-int line = 0;
-int column = 0;
+int line = 1;
+int column = 1;
 void count()
 {
 	int i;
@@ -90,7 +102,7 @@ void count()
 	{	
 		if (yytext[i] == '\n')
 		{	
-			column = 0;
+			column = 1;
 			line += 1;
 		}
 		else if (yytext[i] == '\t')
@@ -106,7 +118,7 @@ void count()
 
 void yyInit()
 {
-    fopen_s(&yyin, "G:/Code/C++/Hamster/Debug/1.txt", "r");
+    fopen_s(&yyin, "G:/Code/C++/Hamster/Example.txt", "r");
 }
 
 void yyOver()
@@ -117,7 +129,7 @@ void yyOver()
 int yyerror(const char *msg)
 {
 	string log = msg;
-	MC::toStr(log, "\tLine: ");
+	log = MC::toStr(log, "\tLine: ");
 	log = MC::toStr(log, line);
 	log = MC::toStr(log, "\tcolumn ");
 	log = MC::toStr(log, column);

@@ -15,7 +15,6 @@ Bison* Bison::getInstance()
 
 Bison::Bison()
 {
-    _body = new Hamster::AST::ASTBody();
 }
 
 Bison::~Bison()
@@ -24,8 +23,28 @@ Bison::~Bison()
 
 void Bison::toFile(std::string fileName)
 {
-    ofstream saveFile(fileName);
-    std::string code = _body->toString();
-    saveFile << code;
-    saveFile.close();
+    // ofstream saveFile(fileName);
+    // std::string code = _body->toString();
+    // saveFile << code;
+    // saveFile.close();
+}
+
+void Hamster::Yacc::Bison::pushBody(AST::ASTBody * body)
+{
+    _bodys.push(body);
+}
+
+Hamster::AST::ASTBody * Hamster::Yacc::Bison::popBody()
+{
+    if (_bodys.size() <= 0)
+        return nullptr;
+
+    Hamster::AST::ASTBody * top = _bodys.top();
+    _bodys.pop();
+    return top;
+}
+
+bool Hamster::Yacc::Bison::isBottom()
+{
+    return _bodys.size() == 1;
 }

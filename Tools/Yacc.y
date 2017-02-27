@@ -45,7 +45,8 @@ void yyOver();
 	ASTValue* Value;
 	ASTBody* Body;
 	ASTDef* Def;
-	ASTStruct* Struct;
+	ASTEnum* Enum;
+	ASTClass* Class;
 	ASTGuidance* Guidance;
 }
 
@@ -54,6 +55,10 @@ void yyOver();
 %type <Node> declaration;
 %type <Body> package_body;
 %type <Def> declaration_specifiers;
+%type <Enum> enum_specifiers;
+%type <Body> enum_specifiers_body;
+%type <Body> enum_specifiers_body_impl;
+%type <Class> struct_specifiers;
 %start translation_unit
 
 %%
@@ -69,7 +74,6 @@ translation_unit
 		if (nullptr == $$)
 			$$ = new ASTBody();
 		$$->addStatement($2);
-		// Bison::body->addStatement($2);
 		// Bison::getInstance()->getBody()->addStatement($2);
 		LOG_INFO($$->toString());
 		LOG_INFO("\t");
@@ -90,6 +94,14 @@ declaration
 	| declaration_specifiers ';' {
 		$$ = $1;
 	}
+	| enum_specifiers enum_specifiers_body {
+		$$ = $1;
+		$1->setBody($2);
+	}
+	| struct_specifiers package_body {
+		$$ = $1;
+		$1->setBody($2);
+	}
 	;
 declaration_specifiers
 	: TYPE_INTEGER IDENTIFIER {
@@ -97,6 +109,49 @@ declaration_specifiers
 		astDef->setType("int");
 		astDef->setName($2);
 		$$ = astDef;
+	}
+	;
+enum_specifiers
+	: ENUM IDENTIFIER  {
+		ASTEnum * astEnum = new ASTEnum();
+		astEnum->setName($2);
+		astEnum->setBody(nullptr);
+		$$ = astEnum;
+	}
+	;
+enum_specifiers_body
+	: '{' enum_specifiers_body_impl '}' {
+		$$ = new ASTBody();
+		$$ = $2;
+	}
+	| '{' '}' {
+		ASTBody * body = new ASTBody();
+		$$ = body;
+	}
+	;
+enum_specifiers_body_impl
+	: IDENTIFIER {
+		ASTValue * value = new ASTValue();
+		value->setValue($1);
+		
+		ASTBody * body = new ASTBody();
+		body->addStatement(value);
+		$$ = body;
+	}
+	| enum_specifiers_body_impl ';' IDENTIFIER {
+		if (nullptr == $$)
+			$$ = new ASTBody();
+
+		ASTValue * value = new ASTValue();
+		value->setValue($3);
+		$$->addStatement(value);
+	}
+	;
+struct_specifiers
+	: STRUCT IDENTIFIER {
+		ASTClass * astClass = new ASTClass();
+		astClass->setName($2);
+		$$ = astClass;
 	}
 	;
 package_body

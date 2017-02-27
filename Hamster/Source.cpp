@@ -16,7 +16,7 @@ int main()
     yyInit();
 	yyparse();
     yyOver();
-    Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");
+    // Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");
 #else
 
     ASTGuidance * guidance = new ASTGuidance();

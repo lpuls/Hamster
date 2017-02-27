@@ -1,4 +1,5 @@
 #include "ASTValue.h"
+#include "../Tool.h"
 
 using namespace Hamster::AST;
 
@@ -35,7 +36,7 @@ void Hamster::AST::ASTValue::release()
 
 void ASTValue::setValue(char* value)
 {
-	_value.String = value;
+	_value.String = MC::toChar(MC::toStr(value).c_str());
 	_type = UASTValueType::STRING;
 }
 

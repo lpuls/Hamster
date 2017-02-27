@@ -4,6 +4,7 @@
 #include "../Tool.h"
 #include "../AST/ASTBody.h"
 
+#include <stack>
 
 namespace Hamster
 {
@@ -18,12 +19,16 @@ namespace Hamster
 
             void toFile(std::string fileName);
 
-            GET(AST::ASTBody*, _body, Body);
+            void pushBody(AST::ASTBody* body);
+            AST::ASTBody* popBody();
+            bool isBottom();
+
 		private:
 
 			static Bison* _instance;
 
-            AST::ASTBody* _body;
+            // AST::ASTBody* _body;
+            std::stack<AST::ASTBody*> _bodys;
 
 			Bison();
 
