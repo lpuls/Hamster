@@ -1,5 +1,6 @@
 #include "Yacc.h"
 #include "ToFile/ToFile.h"
+#include "ToFile/ToFile.h"
 #include "Yacc/Bison.h"
 #include "AST/ASTPackage.h"
 #include "AST/ASTGuidance.h"
@@ -90,7 +91,8 @@ int main()
     body->addStatement(astEnum);
 
     ToFile file;
-    file.toFile("", body, 0);
+    std::string code = file.toFile(body, 0);
+    LOG_INFO(code);
 
     LOG_INFO(package->toString());
     package->release();
