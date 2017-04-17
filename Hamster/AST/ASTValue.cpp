@@ -5,6 +5,7 @@ using namespace Hamster::AST;
 
 ASTValue::ASTValue() 
 {
+	type = ASTType::AST_TYPE_VALUE;
 }
 
 ASTValue::~ASTValue() 

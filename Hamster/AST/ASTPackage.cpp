@@ -5,6 +5,7 @@ Hamster::AST::ASTPackage::ASTPackage()
 {
     _packageName = nullptr;
 	// _body = new ASTBody();
+	type = ASTType::AST_TYPE_PACKAGE;
 }
 
 Hamster::AST::ASTPackage::~ASTPackage()

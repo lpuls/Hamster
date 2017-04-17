@@ -2,6 +2,7 @@
 
 Hamster::AST::ASTEnum::ASTEnum()
 {
+	type = ASTType::AST_TYPE_ENUM;
 }
 
 Hamster::AST::ASTEnum::~ASTEnum()

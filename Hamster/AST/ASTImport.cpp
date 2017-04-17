@@ -6,6 +6,7 @@ using namespace Hamster::AST;
 ASTImport::ASTImport()
 {
 	_packageName = nullptr;
+	type = ASTType::AST_TYPE_IMPORT;
 }
 
 ASTImport::~ASTImport()

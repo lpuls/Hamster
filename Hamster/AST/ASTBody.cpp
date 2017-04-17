@@ -5,6 +5,7 @@ using namespace Hamster::AST;
 
 ASTBody::ASTBody()
 {
+	type = ASTType::AST_TYPE_BODY;
 }
 
 ASTBody::~ASTBody()

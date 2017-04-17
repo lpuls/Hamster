@@ -7,6 +7,7 @@ ASTGuidance::ASTGuidance()
 {
 	// _name = "";
 	// _next = nullptr;
+	type = ASTType::AST_TYPE_GUIDANCE;
 }
 
 ASTGuidance::~ASTGuidance()

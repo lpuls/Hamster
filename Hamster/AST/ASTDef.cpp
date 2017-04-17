@@ -2,6 +2,7 @@
 
 Hamster::AST::ASTDef::ASTDef()
 {
+	type = ASTType::AST_TYPE_DEF;
 }
 
 Hamster::AST::ASTDef::~ASTDef()
