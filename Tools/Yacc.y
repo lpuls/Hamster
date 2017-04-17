@@ -34,7 +34,7 @@ void yyOver();
 
 %token <String> IDENTIFIER
 %token IMPORT PACKAGE ENUM STRUCT 
-%token TYPE_STRING TYPE_INTEGER TYPE_FLOAT TYPE_BOOL
+%token TYPE_STRING TYPE_INTEGER_U16 TYPE_INTEGER_U32 TYPE_INTEGER_16 TYPE_INTEGER_32 TYPE_FLOAT TYPE_BOOL
 
 
 %union {
@@ -66,17 +66,14 @@ translation_unit
 	: declaration {
 		$$ = new ASTBody();
 		$$->addStatement($1);
+		$1->parent = $$;
 		Bison::getInstance()->pushBody($$);
-		// LOG_INFO($$->toString());
-		// LOG_INFO("\t");
 	}
 	| translation_unit declaration {
 		if (nullptr == $$)
 			$$ = new ASTBody();
 		$$->addStatement($2);
-		// Bison::getInstance()->pushBody($$);
-		// LOG_INFO($$->toString());
-		// LOG_INFO("\t");
+		$2->parent = $$;
 	}
 	;
 declaration 
@@ -84,12 +81,15 @@ declaration
 		ASTImport * import = new ASTImport();
 		import->setPackageName($2);
 		$$ = import;
+		$2->parent = $$;
 	}
 	| PACKAGE package_name package_body {
 		ASTPackage * package = new ASTPackage();
 		package->setPackageName($2);
 		package->setBody($3);
 		$$ = package;
+		$2->parent = $$;
+		$3->parent = $$;
 	}
 	| declaration_specifiers ';' {
 		$$ = $1;
@@ -97,16 +97,60 @@ declaration
 	| enum_specifiers enum_specifiers_body {
 		$$ = $1;
 		$1->setBody($2);
+		$2->parent = $1;
 	}
 	| struct_specifiers package_body {
 		$$ = $1;
 		$1->setBody($2);
+		$2->parent = $1;
 	}
 	;
 declaration_specifiers
-	: TYPE_INTEGER IDENTIFIER {
+	: TYPE_INTEGER_U16 IDENTIFIER {
 		ASTDef * astDef = new ASTDef();
-		astDef->setType("int");
+		astDef->setType("uint16");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| TYPE_INTEGER_U32 IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("uint32");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| TYPE_INTEGER_16 IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("int16");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| TYPE_INTEGER_32 IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("int32");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| TYPE_STRING IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("string");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| TYPE_FLOAT IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("float");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| TYPE_BOOL IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("bool");
+		astDef->setName($2);
+		$$ = astDef;
+	}
+	| IDENTIFIER IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType($1);
 		astDef->setName($2);
 		$$ = astDef;
 	}
@@ -159,6 +203,7 @@ package_body
 		ASTBody * body = new ASTBody();
 		body->addStatement($2);
 		$$ = body;
+		$2->parent = $$;
 	}
 	| '{' '}' {
 		ASTBody* body = new ASTBody();

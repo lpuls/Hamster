@@ -2,6 +2,7 @@
 
 Hamster::AST::ASTEnum::ASTEnum()
 {
+	ASTNode::ASTNode();
 	type = ASTType::AST_TYPE_ENUM;
 }
 

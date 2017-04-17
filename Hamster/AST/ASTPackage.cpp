@@ -3,8 +3,8 @@
 
 Hamster::AST::ASTPackage::ASTPackage()
 {
+	ASTNode::ASTNode();
     _packageName = nullptr;
-	// _body = new ASTBody();
 	type = ASTType::AST_TYPE_PACKAGE;
 }
 

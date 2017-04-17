@@ -11,14 +11,14 @@ namespace Hamster
         ToCsharp();
         ~ToCsharp();
 
-        virtual std::string toBody(ASTBody * body, int level)  override;
-        virtual std::string toPackage(ASTPackage * package, int level)  override;
-        virtual std::string toImport(ASTImport * import, int level)  override;
-        virtual std::string toPackageName(ASTGuidance * packageName, int level)  override;
-        virtual std::string toDef(ASTDef * def, int level)  override;
-        virtual std::string toEnum(ASTEnum * astEnum, int level)  override;
-        virtual std::string toValue(ASTValue * value, int level)  override;
-        virtual std::string toClass(ASTClass * astClass, int level)  override;
+        virtual std::string toBody(ASTBody * body)  override;
+        virtual std::string toPackage(ASTPackage * package)  override;
+        virtual std::string toImport(ASTImport * import)  override;
+        virtual std::string toPackageName(ASTGuidance * packageName)  override;
+        virtual std::string toDef(ASTDef * def)  override;
+        virtual std::string toEnum(ASTEnum * astEnum)  override;
+        virtual std::string toValue(ASTValue * value)  override;
+        virtual std::string toClass(ASTClass * astClass)  override;
 
     private:
 

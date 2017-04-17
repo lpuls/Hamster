@@ -19,9 +19,21 @@ num [0-9]
 
 %%
 [ \t\v\n\f]		{ count(); }
-"int" {
+"uint16" {
 	count();
-	return TYPE_INTEGER;
+	return TYPE_INTEGER_U16;
+}
+"uint32" {
+	count();
+	return TYPE_INTEGER_U32;
+}
+"int16" {
+	count();
+	return TYPE_INTEGER_16;
+}
+"int32" {
+	count();
+	return TYPE_INTEGER_32;
 }
 "float" {
 	count();
@@ -118,7 +130,7 @@ void count()
 
 void yyInit()
 {
-    fopen_s(&yyin, "G:/Code/C++/Hamster/Example.txt", "r");
+    fopen_s(&yyin, "E:\\My\\C++\\Hamster\\Example.txt", "r");
 }
 
 void yyOver()

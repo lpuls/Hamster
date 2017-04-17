@@ -13,28 +13,33 @@
 
 using namespace Hamster::AST;
 
+#define IS_EQUAL(type, value) type == nodeType
+#define IS_NULL(node) if (nullptr == node) { LOG_ERROR("null node"); return ""; }
+
 namespace Hamster
 {
-    class ToFile
+	class ToFile
     {
     public:
         ToFile();
         ~ToFile();
 
-        std::string toFile(ASTNode * node, int level);
-        std::string getSpace(int level);
+        std::string toFile(ASTNode * node);
+        std::string getSpace();
+		std::string getSpace(int count);
 
-        virtual std::string toBody(ASTBody * body, int level);
-        virtual std::string toPackage(ASTPackage * package, int level);
-        virtual std::string toImport(ASTImport * import, int level);
-        virtual std::string toPackageName(ASTGuidance * packageName, int level);
-        virtual std::string toDef(ASTDef * def, int level);
-        virtual std::string toEnum(ASTEnum * astEnum, int level);
-        virtual std::string toValue(ASTValue * value, int level);
-        virtual std::string toClass(ASTClass * astClass, int level);
+        virtual std::string toBody(ASTBody * body);
+        virtual std::string toPackage(ASTPackage * package);
+        virtual std::string toImport(ASTImport * import);
+        virtual std::string toPackageName(ASTGuidance * packageName);
+        virtual std::string toDef(ASTDef * def);
+        virtual std::string toEnum(ASTEnum * astEnum);
+        virtual std::string toValue(ASTValue * value);
+        virtual std::string toClass(ASTClass * astClass);
+		virtual std::string toDefBody(ASTDef * def);
 
-    private:
-
+	protected:
+		int _bodyCount;
     };
 }
 

@@ -5,8 +5,7 @@ using namespace Hamster::AST;
 
 ASTGuidance::ASTGuidance()
 {
-	// _name = "";
-	// _next = nullptr;
+	ASTNode::ASTNode();
 	type = ASTType::AST_TYPE_GUIDANCE;
 }
 

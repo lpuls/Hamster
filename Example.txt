@@ -1,18 +1,15 @@
 import System;
-import UnityEditor;
 package Def
 {
-    int a;
-
-    enum b 
-	{ 
-		VALUE0; 
-		VALUE1 
-	}
-
-	class c 
+	class User
 	{
-		int d;
-		int e;
+		uint16 a;
+		uint32 b;
+		int16 c;
+		int32 d;
+		string e;
+		float f;
+		bool g;
+		Skill h;
 	}
 }

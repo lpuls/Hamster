@@ -5,6 +5,7 @@ using namespace Hamster::AST;
 
 ASTImport::ASTImport()
 {
+	ASTNode::ASTNode();
 	_packageName = nullptr;
 	type = ASTType::AST_TYPE_IMPORT;
 }

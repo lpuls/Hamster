@@ -4,6 +4,7 @@ using namespace Hamster::AST;
 
 ASTClass::ASTClass()
 {
+	ASTNode::ASTNode();
 	type = ASTType::AST_TYPE_CLASS;
 }
 

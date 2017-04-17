@@ -30,9 +30,11 @@ namespace Hamster
 			~ASTNode();
 
 			ASTType type;
+			ASTNode * parent;
 	
 			std::string virtual toString();
 			void virtual release();
+			ASTNode * getParent();
 		};
 
     }

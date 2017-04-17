@@ -2,6 +2,7 @@
 
 Hamster::AST::ASTDef::ASTDef()
 {
+	ASTNode::ASTNode();
 	type = ASTType::AST_TYPE_DEF;
 }
 
@@ -17,4 +18,10 @@ std::string Hamster::AST::ASTDef::toString()
 
 void Hamster::AST::ASTDef::release()
 {
+}
+
+void Hamster::AST::ASTDef::setType(std::string type)
+{
+	size_t index = type.find(' ');
+	_type = type.substr(0, index);
 }

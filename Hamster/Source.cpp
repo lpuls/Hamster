@@ -1,6 +1,7 @@
 #include "Yacc.h"
 #include "ToFile/ToFile.h"
 #include "ToFile/ToFile.h"
+#include "ToFile/ToPy.h"
 #include "Yacc/Bison.h"
 #include "AST/ASTPackage.h"
 #include "AST/ASTGuidance.h"
@@ -9,7 +10,7 @@
 #include "AST/ASTBody.h"
 #include "Tool.h"
 
-// #define __YACC__
+#define __YACC__
 
 using namespace Hamster;
 using namespace Hamster::AST;
@@ -21,12 +22,13 @@ int main()
     yyInit();
     yyparse();
     yyOver();
-    Hamster::AST::ASTBody * body = Bison::getInstance()->getBody(0);
+	Hamster::AST::ASTBody * body = Bison::getInstance()->getBody(0);
     if (nullptr != body)
     {
-        std::string content = body->toString();
+		ToPy toPy;
+		std::string content = toPy.toFile(body);  // body->toString();
         LOG_INFO(content);
-        Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt", content);
+        Bison::getInstance()->toFile("E:\\My\\C++\\Hamster\\Code.py", content);
     }
     Bison::getInstance()->clear();
     // Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");

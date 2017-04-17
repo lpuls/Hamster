@@ -79,9 +79,12 @@ void yyOver();
      ENUM = 261,
      STRUCT = 262,
      TYPE_STRING = 263,
-     TYPE_INTEGER = 264,
-     TYPE_FLOAT = 265,
-     TYPE_BOOL = 266
+     TYPE_INTEGER_U16 = 264,
+     TYPE_INTEGER_U32 = 265,
+     TYPE_INTEGER_16 = 266,
+     TYPE_INTEGER_32 = 267,
+     TYPE_FLOAT = 268,
+     TYPE_BOOL = 269
    };
 #endif
 
@@ -105,7 +108,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 109 "Yacc.tab.h"
+#line 112 "Yacc.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
