@@ -1,7 +1,7 @@
 import System;
 package Def
 {
-	class User
+	class User:Message
 	{
 		uint16 a;
 		uint32 b;

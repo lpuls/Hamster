@@ -1,5 +1,7 @@
 #include "Tool.h"
 
+#include <string>
+#include <sstream>
 #include <iostream>
 #ifdef WINDOWS
 #include "windows.h"
@@ -69,6 +71,15 @@ void MC::sleep(unsigned int time)
 #endif
 }
 
+int MC::toInt(string str)
+{
+	std::istringstream iss;
+	iss.str(str);
+	int value;
+	iss >> value;
+	return value;
+}
+
 char * MC::toChar(const char * str)
 {
     int size = strlen(str) + 1;
@@ -76,4 +87,3 @@ char * MC::toChar(const char * str)
     strcpy_s(buf, size, str);
     return buf;
 }
-

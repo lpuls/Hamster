@@ -77,6 +77,8 @@ namespace MC
         return stream.str();
     }
 
+	int toInt(string str);
+
     char* toChar(const char* str);
 }
 

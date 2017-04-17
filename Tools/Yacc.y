@@ -48,6 +48,7 @@ void yyOver();
 	ASTEnum* Enum;
 	ASTClass* Class;
 	ASTGuidance* Guidance;
+	ASTValue* Inherit;
 }
 
 %type <Body> translation_unit;
@@ -59,6 +60,7 @@ void yyOver();
 %type <Body> enum_specifiers_body;
 %type <Body> enum_specifiers_body_impl;
 %type <Class> struct_specifiers;
+%type <Inherit> inherit
 %start translation_unit
 
 %%
@@ -192,10 +194,20 @@ enum_specifiers_body_impl
 	}
 	;
 struct_specifiers
-	: STRUCT IDENTIFIER {
+	: STRUCT IDENTIFIER inherit {
 		ASTClass * astClass = new ASTClass();
 		astClass->setName($2);
+		astClass->setInherit($3);
 		$$ = astClass;
+	}
+	;
+inherit
+	: ':' IDENTIFIER {
+		$$ = new ASTValue();
+		$$->setValue($2);
+	}
+	| {
+		$$ = nullptr;
 	}
 	;
 package_body

@@ -19,7 +19,6 @@ namespace Hamster
             void virtual release() override;
 
             GET(std::string, _type, Type);
-            // SET(std::string, _type, Type);
 			void setType(std::string type);
 
             GET(std::string, _name, Name);

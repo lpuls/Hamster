@@ -25,10 +25,12 @@ int main()
 	Hamster::AST::ASTBody * body = Bison::getInstance()->getBody(0);
     if (nullptr != body)
     {
+		ToFile::initMessageID();
 		ToPy toPy;
 		std::string content = toPy.toFile(body);  // body->toString();
+		ToFile::saveMessageID();
         LOG_INFO(content);
-        Bison::getInstance()->toFile("E:\\My\\C++\\Hamster\\Code.py", content);
+        Bison::getInstance()->toFile("E:\\My\\C++\\Hamster\\" + toPy.getPackageName() + ".py", content);
     }
     Bison::getInstance()->clear();
     // Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");

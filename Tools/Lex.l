@@ -96,6 +96,10 @@ num [0-9]
 	count();
 	return('='); 
 }
+":" {
+	count();
+	return(':');
+}
 
 %%
 

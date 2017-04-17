@@ -105,10 +105,11 @@ typedef union YYSTYPE
 	ASTEnum* Enum;
 	ASTClass* Class;
 	ASTGuidance* Guidance;
+	ASTValue* Inherit;
 
 
 /* Line 2058 of yacc.c  */
-#line 112 "Yacc.tab.h"
+#line 113 "Yacc.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

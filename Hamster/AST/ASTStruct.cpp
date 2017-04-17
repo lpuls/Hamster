@@ -27,3 +27,8 @@ void Hamster::AST::ASTStruct::release()
     }
     _body = nullptr;
 }
+
+void Hamster::AST::ASTStruct::setName(std::string name)
+{
+	_name = name.substr(0, name.find(':'));
+}

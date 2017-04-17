@@ -1,10 +1,16 @@
 #include "../AST/ASTNode.h"
 #include "ToFile.h"
 #include "../Tool.h"
+#include <fstream>
+
+std::map<std::string, int> Hamster::ToFile::_messageID;
 
 Hamster::ToFile::ToFile()
 {
 	_bodyCount = 0;
+	_packageName = "";
+
+	
 }
 
 Hamster::ToFile::~ToFile()
@@ -172,5 +178,76 @@ std::string Hamster::ToFile::toClass(ASTClass * astClass)
 
 std::string Hamster::ToFile::toDefBody(ASTDef * def)
 {
-	return "";
+	return std::string();
+}
+
+std::string Hamster::ToFile::getMeta(vector<ASTDef*> body, int space)
+{
+	return std::string();
+}
+
+void Hamster::ToFile::initMessageID()
+{
+	ifstream infile("E:\\My\\C++\\Hamster\\Debug\\init.txt");
+	if (!infile.is_open())   //若失败,则输出错误消息,并终止程序运行 
+	{
+		LOG_ERROR("Error: Unable to read from the configuration file");
+		system("pause");
+		exit(-1);
+	}
+
+	char buffer[1024] = "";
+	while (!infile.eof())
+	{
+		infile.getline(buffer, 1024);
+		string s(buffer);
+		int separate = s.find(':');
+		string key = s.substr(0, separate);
+		string value = s.substr(separate + 1, s.size());
+		int mid = MC::toInt(value);
+		ToFile::_messageID[key] = mid;
+	}
+	infile.close(); 
+}
+
+void Hamster::ToFile::saveMessageID()
+{
+	ofstream  infile("E:\\My\\C++\\Hamster\\Debug\\init.txt");
+	if (!infile.is_open())
+	{
+		LOG_ERROR("Error: Unable to save from the configuration file");
+		system("pause");
+		exit(-1);
+	}
+	for each (auto var in ToFile::_messageID)
+	{
+		string key = var.first;
+		int value = var.second;
+		infile << key;
+		infile << ":";
+		infile << value;
+		infile << "\n";
+	}
+	infile.close();
+}
+
+bool Hamster::ToFile::addMessageID(std::string messageName, int ID)
+{
+	auto result = ToFile::_messageID.find(messageName);
+	if (result != ToFile::_messageID.end())
+		return false;
+	ToFile::_messageID[messageName] = ID;
+	return true;
+}
+
+int Hamster::ToFile::getMaxMessageID()
+{
+	int max = 0;
+	for each (auto var in ToFile::_messageID)
+	{
+		int value = var.second;
+		if (max < value)
+			max = value;
+	}
+	return max + 1;
 }

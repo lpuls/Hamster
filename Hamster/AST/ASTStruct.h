@@ -20,8 +20,9 @@ namespace Hamster
             std::string virtual toString() override;
             void virtual release() override;
 
-            SET(std::string, _name, Name);
-            GET(std::string, _name, Name);
+            // SET(std::string, _name, Name);
+			void setName(std::string name);
+			GET(std::string, _name, Name);
 
             SET(ASTBody*, _body, Body);
             GET(ASTBody*, _body, Body);
