@@ -1,8 +1,8 @@
 # Hamster - Xp' data interchange format
-this is a data interchange format like google's protocol Buffers [google protobuf's site](https://github.com/google/protobuf).
+> 这是一个类似于[google protobuf's site](https://github.com/google/protobuf) 的数据格式生器工具
 
 ## overview
-Hamster are language-neutral, platform-neutral, extensible mechanism for serializing structured data.
+这是一个平台，语言无关的数据序列化代码生成工具。
 
 ## 其它
 * 开发者上传了很多无用的文件，之后会注理= =

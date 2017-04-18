@@ -126,7 +126,7 @@ using namespace std;
 using namespace Hamster::AST;
 using namespace Hamster::Yacc;
 
-void yyInit();
+void yyInit(const char * path);
 void yyOver();
 
 

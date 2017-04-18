@@ -1738,9 +1738,10 @@ void count()
 	}
 }
 
-void yyInit()
+void yyInit(const char * path)
 {
-    fopen_s(&yyin, "Example\\Proto\\Common.proto", "r");
+    // fopen_s(&yyin, "Example\\Proto\\Common.proto", "r");
+    fopen_s(&yyin, path, "r");
 }
 
 void yyOver()
