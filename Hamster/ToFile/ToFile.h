@@ -14,6 +14,7 @@
 
 using namespace Hamster::AST;
 
+#define MESSAGE_CLASS_NAME "Message"
 #define IS_EQUAL(type, value) type == nodeType
 #define IS_NULL(node) if (nullptr == node) { LOG_ERROR("null node"); return ""; }
 
@@ -49,6 +50,8 @@ namespace Hamster
 		int _bodyCount;
 		std::string _packageName;
 		static std::map<std::string, int> _messageID;
+
+		bool isMessage(std::string className);
     };
 }
 

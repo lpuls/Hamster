@@ -188,6 +188,7 @@ std::string Hamster::ToFile::getMeta(vector<ASTDef*> body, int space)
 
 void Hamster::ToFile::initMessageID()
 {
+	// TODO 这里之后要改为相对路径
 	ifstream infile("E:\\My\\C++\\Hamster\\Debug\\init.txt");
 	if (!infile.is_open())   //若失败,则输出错误消息,并终止程序运行 
 	{
@@ -212,6 +213,7 @@ void Hamster::ToFile::initMessageID()
 
 void Hamster::ToFile::saveMessageID()
 {
+	// TODO 这里之后要改为相对路径
 	ofstream  infile("E:\\My\\C++\\Hamster\\Debug\\init.txt");
 	if (!infile.is_open())
 	{
@@ -250,4 +252,9 @@ int Hamster::ToFile::getMaxMessageID()
 			max = value;
 	}
 	return max + 1;
+}
+
+bool Hamster::ToFile::isMessage(std::string className)
+{
+	return className == MESSAGE_CLASS_NAME;
 }

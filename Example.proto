@@ -1,0 +1,31 @@
+import Sloth.Message.Message;
+import Sloth.BinaryTypeDef.BinaryTypeDef;
+
+package Def
+{
+	enum GameModel
+	{
+		Easy;
+		Normal;
+		Hard
+	}
+
+	class Skill
+	{
+		uint16 skill_id;
+		string skill_name;
+	}
+
+	class User:Message
+	{
+		uint16 a;
+		uint32 b;
+		int16 c;
+		int32 d;
+		string e;
+		float f;
+		bool g;
+		Skill h;
+		list<int> i;
+	}
+}

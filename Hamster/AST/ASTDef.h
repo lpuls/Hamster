@@ -24,9 +24,12 @@ namespace Hamster
             GET(std::string, _name, Name);
             SET(std::string, _name, Name);
 
+			GET(ASTNode *, _other, Other);
+			SET(ASTNode *, _other, Other);
         private:
             std::string _type;
             std::string _name;
+			ASTNode *_other;
         };
     }
 }

@@ -43,8 +43,10 @@ std::string Hamster::ToPy::toPackage(ASTPackage * package)
 
 std::string Hamster::ToPy::toImport(ASTImport * import)
 {
-	string importCode = getSpace();
-	importCode = importCode + "import " + toPackageName(import->getPackageName()) + "\n";
+	std::string importCode = getSpace();
+	std::string packageName = toPackageName(import->getPackageName());
+	int count = import->getPackageName()->getCount();
+	importCode = importCode + "from " + packageName + " import " + import->getPackageName()->getNext(count - 1);
 	return importCode;
 }
 
@@ -53,7 +55,7 @@ std::string Hamster::ToPy::toPackageName(ASTGuidance * packageName)
 	string name = getSpace();
 	int packageNameCount = packageName->getCount();
 	name = name + packageName->getNext(0);
-	for (int i = 1; i < packageNameCount; i++)
+	for (int i = 1; i < packageNameCount - 1; i++)
 	{
 		name += ".";
 		name += packageName->getNext(i);
@@ -79,12 +81,38 @@ std::string Hamster::ToPy::toDef(ASTDef * def)
 
 std::string Hamster::ToPy::toEnum(ASTEnum * astEnum)
 {
-	return std::string();
+	std::string code = "class " + astEnum->getName() + ":\n";
+	
+	// 获取枚举下的所有定义
+	std::vector<ASTValue*> defs;
+	ASTBody *defBody = astEnum->getBody();
+	if (nullptr == defBody)
+		return "";
+	size_t defsCoun = defBody->getStatementCount();
+	for (size_t i = 0; i < defsCoun; i++)
+	{
+		ASTNode *node = defBody->getStatement(i);
+		if (AST::ASTType::AST_TYPE_VALUE == node->type)
+			defs.push_back(dynamic_cast<ASTValue*>(node));
+	}
+
+	_bodyCount += 1;
+	for (int i = 0; i < defs.size(); i++)
+	{
+		std::string value = toValue(defs[i]);
+		code += value;
+		code = code + (" = " + MC::toStr(i));
+		code += "\n";
+	}
+	_bodyCount -= 1;
+
+	return code;
 }
 
 std::string Hamster::ToPy::toValue(ASTValue * value)
 {
-	return std::string();
+	std::string space = getSpace();
+	return (space + value->getValue().String);
 }
 
 std::string Hamster::ToPy::toClass(ASTClass * astClass)
@@ -96,11 +124,13 @@ std::string Hamster::ToPy::toClass(ASTClass * astClass)
 
 	int mid = 0;
 	// 检查是否存在父类
+	bool isMessageObject = false;
 	ASTValue *parentValue = astClass->getInherit();
 	if (nullptr != parentValue)
 	{
 		std::string parentName = parentValue->getValue().String;
-		if ("Message" == parentName)
+		isMessageObject = isMessage(parentName);
+		if (isMessageObject)
 		{
 			mid = ToFile::getMaxMessageID();
 			ToFile::addMessageID(className, mid);
@@ -126,7 +156,8 @@ std::string Hamster::ToPy::toClass(ASTClass * astClass)
 	}
 	std::string meta = subSpace + getMeta(defs, _bodyCount + 2) + "\n";
 	code += meta;
-	code += (subSpace + "MID = " + MC::toStr(mid) + "\n");
+	if (isMessageObject)
+		code += (subSpace + "MID = " + MC::toStr(mid) + "\n");
 
 	// 初始化属性
 	code = code + subSpace + "def __init__(self):\n";
@@ -169,23 +200,23 @@ std::string Hamster::ToPy::getMeta(vector<ASTDef*> body, int space)
 			continue;
 		std::string sub = spaceStr;
 		if ("uint16" == subDef->getType())
-			sub += "( BinaryTypeDef.UINT16, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.UINT16, '" + subDef->getName() + "', ), \n";
 		else if ("uint32" == subDef->getType())
-			sub += "( BinaryTypeDef.UINT32, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.UINT32, '" + subDef->getName() + "', ), \n";
 		else if ("int16" == subDef->getType())
-			sub += "( BinaryTypeDef.INT16, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.INT16, '" + subDef->getName() + "', ), \n";
 		else if ("int32" == subDef->getType())
-			sub += "( BinaryTypeDef.INT32, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.INT32, '" + subDef->getName() + "', ), \n";
 		else if ("string" == subDef->getType())
-			sub += "( BinaryTypeDef.STRING, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.STRING, '" + subDef->getName() + "', ), \n";
 		else if ("float" == subDef->getType())
-			sub += "( BinaryTypeDef.FLOAT, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.FLOAT, '" + subDef->getName() + "', ), \n";
 		else if ("bool" == subDef->getType())
-			sub += "( BinaryTypeDef.BOOL, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.BOOL, '" + subDef->getName() + "', ), \n";
 		else if ("list" == subDef->getType())
-			sub += "( BinaryTypeDef.LIST, " + subDef->getName() + ", BinaryTypeDef.UINT16, ), \n";
+			sub += "( BinaryTypeDef.LIST, '" + subDef->getName() + "', BinaryTypeDef.UINT16, ), \n";
 		else
-			sub += "( BinaryTypeDef.STRUCT, " + subDef->getName() + ", ), \n";
+			sub += "( BinaryTypeDef.STRUCT, '" + subDef->getName() + "', ), \n";
 		code += sub;
 	}
 	code += spaceStr;
