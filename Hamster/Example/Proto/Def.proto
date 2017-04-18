@@ -1,7 +1,7 @@
 import Sloth.Message.Message;
 import Sloth.BinaryTypeDef.BinaryTypeDef;
 
-package Def
+package Common.Def
 {
 	enum GameModel
 	{
@@ -26,6 +26,6 @@ package Def
 		float f;
 		bool g;
 		Skill h;
-		list<int> i;
+		list<uint32> i;
 	}
 }

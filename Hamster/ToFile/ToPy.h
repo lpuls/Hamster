@@ -21,6 +21,7 @@ namespace Hamster
 		virtual std::string toClass(ASTClass * astClass)  override;
 		virtual std::string toDefBody(ASTDef * def) override;
 		virtual std::string getMeta(vector<ASTDef*> body, int space) override;
+		virtual std::string getMeta(ASTNode *other) override;
 	};
 }
 

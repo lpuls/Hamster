@@ -4,13 +4,13 @@
 #include <fstream>
 
 std::map<std::string, int> Hamster::ToFile::_messageID;
+std::map<std::string, std::string> Hamster::ToFile::_typeDef;
 
 Hamster::ToFile::ToFile()
 {
 	_bodyCount = 0;
 	_packageName = "";
-
-	
+	_packagePath = "";
 }
 
 Hamster::ToFile::~ToFile()
@@ -186,10 +186,15 @@ std::string Hamster::ToFile::getMeta(vector<ASTDef*> body, int space)
 	return std::string();
 }
 
+std::string Hamster::ToFile::getMeta(ASTNode *other)
+{
+	return std::string();
+}
+
 void Hamster::ToFile::initMessageID()
 {
-	// TODO 这里之后要改为相对路径
-	ifstream infile("init.txt");
+	// 读取消息包ID的记录文件
+	ifstream infile("Config\\Py\\init.ini");
 	if (!infile.is_open())   //若失败,则输出错误消息,并终止程序运行 
 	{
 		LOG_ERROR("Error: Unable to read from the configuration file");
@@ -209,12 +214,30 @@ void Hamster::ToFile::initMessageID()
 		ToFile::_messageID[key] = mid;
 	}
 	infile.close(); 
+
+	// 读取类型文件
+	infile.open("Config\\Py\\typeDef.ini");
+	if (!infile.is_open())   //若失败,则输出错误消息,并终止程序运行 
+	{
+		LOG_ERROR("Error: Unable to read from the configuration file");
+		system("pause");
+		exit(-1);
+	}
+	while (!infile.eof())
+	{
+		infile.getline(buffer, 1024);
+		string s(buffer);
+		int separate = s.find(':');
+		string key = s.substr(0, separate);
+		string value = s.substr(separate + 1, s.size());
+		ToFile::_typeDef[key] = value;
+	}
+	infile.close();
 }
 
 void Hamster::ToFile::saveMessageID()
 {
-	// TODO 这里之后要改为相对路径
-	ofstream  infile("init.txt");
+	ofstream  infile("Config\\Py\\init.ini");
 	if (!infile.is_open())
 	{
 		LOG_ERROR("Error: Unable to save from the configuration file");
@@ -257,4 +280,12 @@ int Hamster::ToFile::getMaxMessageID()
 bool Hamster::ToFile::isMessage(std::string className)
 {
 	return className == MESSAGE_CLASS_NAME;
+}
+
+string Hamster::ToFile::getType(std::string type)
+{
+	auto result = ToFile::_typeDef.find(type);
+	if (result == ToFile::_typeDef.end())
+		return "BinaryTypeDef.STRUCT";
+	return result->second;
 }

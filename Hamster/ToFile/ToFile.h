@@ -30,6 +30,7 @@ namespace Hamster
         std::string getSpace();
 		std::string getSpace(int count);
 		GET(std::string, _packageName, PackageName);
+		GET(std::string, _packagePath, PackagePath);
 
         virtual std::string toBody(ASTBody * body);
         virtual std::string toPackage(ASTPackage * package);
@@ -41,15 +42,19 @@ namespace Hamster
         virtual std::string toClass(ASTClass * astClass);
 		virtual std::string toDefBody(ASTDef * def);
 		virtual std::string getMeta(vector<ASTDef*> body, int space);
+		virtual std::string getMeta(ASTNode *other);
 
 		static void initMessageID();
 		static void saveMessageID();
 		static bool addMessageID(std::string messageName, int ID);
 		static int getMaxMessageID();
+		static string getType(std::string type);
 	protected:
 		int _bodyCount;
 		std::string _packageName;
+		std::string _packagePath;
 		static std::map<std::string, int> _messageID;
+		static std::map<std::string, std::string> _typeDef;
 
 		bool isMessage(std::string className);
     };

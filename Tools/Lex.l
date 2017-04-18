@@ -146,7 +146,7 @@ void count()
 
 void yyInit()
 {
-    fopen_s(&yyin, "Example\\Proto\\Example.proto", "r");
+    fopen_s(&yyin, "Example\\Proto\\Common.proto", "r");
 }
 
 void yyOver()

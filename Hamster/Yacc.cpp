@@ -1711,10 +1711,10 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 210 "Tools\\Yacc.y"
     {
-		ASTDef * astDef = new ASTDef();
-		astDef->setType("list");
-		astDef->setOther((yyvsp[(3) - (4)].Types));
-		(yyval.Types) = astDef;
+		ASTDef *value = new ASTDef();
+		value->setType("list");
+		value->setOther((yyvsp[(3) - (4)].Types));
+		(yyval.Types) = value;
 	}
     break;
 

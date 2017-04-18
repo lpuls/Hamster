@@ -30,7 +30,10 @@ int main()
 		std::string content = toPy.toFile(body);
 		ToFile::saveMessageID();
         LOG_INFO(content);
-        Bison::getInstance()->toFile("Example\\Result\\" + toPy.getPackageName() + ".py", content);
+		std::string path = "Example\\Result\\" + toPy.getPackagePath();
+		const char *command = MC::toChar(MC::toStr("md ", path).c_str());
+		system(command);
+		Bison::getInstance()->toFile(path + "\\" + toPy.getPackageName() + ".py", content);
     }
     Bison::getInstance()->clear();
 #else

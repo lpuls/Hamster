@@ -1,0 +1,27 @@
+import Sloth.Message.Message;
+import Sloth.BinaryTypeDef.BinaryTypeDef;
+
+package Common.Common
+{
+	enum PlayerJob
+	{
+		Brave;
+		Swordman;
+		Pastor;
+		Wizard
+	}
+
+	class Player
+	{
+		uint16 level;
+		string name;
+	}
+
+	class NotifyPlayerInfo : Message
+	{
+		Player player;
+		list<uint32> items;
+		uint32 money;
+		uint32 soul;
+	}
+}

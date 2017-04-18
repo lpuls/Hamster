@@ -208,10 +208,10 @@ types
 		$$ = value;
 	}
 	| TYPE_LIST '<' types '>' {
-		ASTDef * astDef = new ASTDef();
-		astDef->setType("list");
-		astDef->setOther($3);
-		$$ = astDef;
+		ASTDef *value = new ASTDef();
+		value->setType("list");
+		value->setOther($3);
+		$$ = value;
 	}
 	;
 enum_specifiers

@@ -36,7 +36,15 @@ std::string Hamster::ToPy::toPackage(ASTPackage * package)
 		LOG_ERROR("Error: More than one package definition");
 		exit(-1);
 	}
-	_packageName = package->getPackageName()->toString();
+	std::string subPath = package->getPackageName()->getNext(0);
+	_packagePath = subPath;
+	for (size_t i = 1; i < package->getPackageName()->getCount() - 1; i++)
+	{
+		subPath = package->getPackageName()->getNext(i);
+		_packagePath += "\\";
+		_packagePath += subPath;
+	}
+	_packageName = package->getPackageName()->getNext(package->getPackageName()->getCount() - 1);
 
 	return code;
 }
@@ -81,7 +89,7 @@ std::string Hamster::ToPy::toDef(ASTDef * def)
 
 std::string Hamster::ToPy::toEnum(ASTEnum * astEnum)
 {
-	std::string code = "class " + astEnum->getName() + ":\n";
+	std::string code = "\nclass " + astEnum->getName() + ":\n";
 	
 	// 获取枚举下的所有定义
 	std::vector<ASTValue*> defs;
@@ -97,7 +105,7 @@ std::string Hamster::ToPy::toEnum(ASTEnum * astEnum)
 	}
 
 	_bodyCount += 1;
-	for (int i = 0; i < defs.size(); i++)
+	for (size_t i = 0; i < defs.size(); i++)
 	{
 		std::string value = toValue(defs[i]);
 		code += value;
@@ -139,7 +147,7 @@ std::string Hamster::ToPy::toClass(ASTClass * astClass)
 	}
 
 	// 合成类结构
-	code += "class " + className + ":\n";
+	code += "\nclass " + className + ":\n";
 
 	std::string subSpace = getSpace(_bodyCount + 1);
 	// 生成meta结构
@@ -193,34 +201,31 @@ std::string Hamster::ToPy::getMeta(vector<ASTDef*> body, int space)
 {
 	std::string spaceStr = getSpace(space);
 	std::string code = "META = (\n";
-	for (int i = 0; i < body.size(); i++)
+	for (size_t i = 0; i < body.size(); i++)
 	{
 		ASTDef *subDef = body[i];
 		if (nullptr == subDef)
 			continue;
 		std::string sub = spaceStr;
-		if ("uint16" == subDef->getType())
-			sub += "( BinaryTypeDef.UINT16, '" + subDef->getName() + "', ), \n";
-		else if ("uint32" == subDef->getType())
-			sub += "( BinaryTypeDef.UINT32, '" + subDef->getName() + "', ), \n";
-		else if ("int16" == subDef->getType())
-			sub += "( BinaryTypeDef.INT16, '" + subDef->getName() + "', ), \n";
-		else if ("int32" == subDef->getType())
-			sub += "( BinaryTypeDef.INT32, '" + subDef->getName() + "', ), \n";
-		else if ("string" == subDef->getType())
-			sub += "( BinaryTypeDef.STRING, '" + subDef->getName() + "', ), \n";
-		else if ("float" == subDef->getType())
-			sub += "( BinaryTypeDef.FLOAT, '" + subDef->getName() + "', ), \n";
-		else if ("bool" == subDef->getType())
-			sub += "( BinaryTypeDef.BOOL, '" + subDef->getName() + "', ), \n";
-		else if ("list" == subDef->getType())
-			sub += "( BinaryTypeDef.LIST, '" + subDef->getName() + "', BinaryTypeDef.UINT16, ), \n";
-		else
-			sub += "( BinaryTypeDef.STRUCT, '" + subDef->getName() + "', ), \n";
+		std::string binaryTypeDef = ToFile::getType(subDef->getType());
+		std::string otherInfo = getMeta(subDef->getOther());  // 目前暂不支持list<list<...>>这样的写法
+		sub += "( " + binaryTypeDef + ", '" + subDef->getName() + "', " + otherInfo + " ), \n";
 		code += sub;
 	}
 	code += spaceStr;
 	code += ")";
 	return code;
 }
+
+std::string Hamster::ToPy::getMeta(ASTNode *other)
+{
+	if (nullptr == other)
+		return "";
+	if (AST::ASTType::AST_TYPE_VALUE == other->type)
+		return ToFile::getType((dynamic_cast<ASTValue*>(other))->getValue().String);
+	else if (AST::ASTType::AST_TYPE_DEF == other->type)
+		return getMeta(dynamic_cast<ASTDef*>(other));
+	return "";
+}
+
 

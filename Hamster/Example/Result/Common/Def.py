@@ -7,8 +7,8 @@ class GameModel:
 
 class Skill:
     META = (
-        ( BinaryTypeDef.UINT16, 'skill_id', ), 
-        ( BinaryTypeDef.STRING, 'skill_name', ), 
+        ( BinaryTypeDef.UINT16, 'skill_id',  ), 
+        ( BinaryTypeDef.STRING, 'skill_name',  ), 
         )
     def __init__(self):
         self.skill_id = 0
@@ -17,15 +17,15 @@ class Skill:
 
 class User(Message):
     META = (
-        ( BinaryTypeDef.UINT16, 'a', ), 
-        ( BinaryTypeDef.UINT32, 'b', ), 
-        ( BinaryTypeDef.INT16, 'c', ), 
-        ( BinaryTypeDef.INT32, 'd', ), 
-        ( BinaryTypeDef.STRING, 'e', ), 
-        ( BinaryTypeDef.FLOAT, 'f', ), 
-        ( BinaryTypeDef.BOOL, 'g', ), 
-        ( BinaryTypeDef.STRUCT, 'h', ), 
-        ( BinaryTypeDef.LIST, 'i', BinaryTypeDef.UINT16, ), 
+        ( BinaryTypeDef.UINT16, 'a',  ), 
+        ( BinaryTypeDef.UINT32, 'b',  ), 
+        ( BinaryTypeDef.INT16, 'c',  ), 
+        ( BinaryTypeDef.INT32, 'd',  ), 
+        ( BinaryTypeDef.STRING, 'e',  ), 
+        ( BinaryTypeDef.FLOAT, 'f',  ), 
+        ( BinaryTypeDef.BOOL, 'g',  ), 
+        ( BinaryTypeDef.STRUCT, 'h',  ), 
+        ( BinaryTypeDef.LIST, 'i', BinaryTypeDef.UINT32 ), 
         )
     MID = 2
     def __init__(self):
