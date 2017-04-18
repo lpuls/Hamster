@@ -34,7 +34,7 @@ void yyOver();
 
 %token <String> IDENTIFIER
 %token IMPORT PACKAGE ENUM STRUCT 
-%token TYPE_STRING TYPE_INTEGER_U16 TYPE_INTEGER_U32 TYPE_INTEGER_16 TYPE_INTEGER_32 TYPE_FLOAT TYPE_BOOL
+%token TYPE_STRING TYPE_INTEGER_U16 TYPE_INTEGER_U32 TYPE_INTEGER_16 TYPE_INTEGER_32 TYPE_FLOAT TYPE_BOOL TYPE_LIST
 
 
 %union {
@@ -49,6 +49,7 @@ void yyOver();
 	ASTClass* Class;
 	ASTGuidance* Guidance;
 	ASTValue* Inherit;
+	ASTNode* Types;
 }
 
 %type <Body> translation_unit;
@@ -61,6 +62,7 @@ void yyOver();
 %type <Body> enum_specifiers_body_impl;
 %type <Class> struct_specifiers;
 %type <Inherit> inherit
+%type <Types> types;
 %start translation_unit
 
 %%
@@ -150,10 +152,65 @@ declaration_specifiers
 		astDef->setName($2);
 		$$ = astDef;
 	}
+	| TYPE_LIST '<' types '>' IDENTIFIER {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("list");
+		astDef->setName($5);
+		astDef->setOther($3);
+		$$ = astDef;
+	}
 	| IDENTIFIER IDENTIFIER {
 		ASTDef * astDef = new ASTDef();
 		astDef->setType($1);
 		astDef->setName($2);
+		$$ = astDef;
+	}
+	;
+types
+	: TYPE_STRING {
+		ASTValue * value = new ASTValue();
+		value->setValue("string");
+		$$ = value;
+	}
+	| TYPE_INTEGER_U16 {
+		ASTValue * value = new ASTValue();
+		value->setValue("uint16");
+		$$ = value;
+	}
+	| TYPE_INTEGER_U32 {
+		ASTValue * value = new ASTValue();
+		value->setValue("uint32");
+		$$ = value;
+	}
+	| TYPE_INTEGER_16 {
+		ASTValue * value = new ASTValue();
+		value->setValue("int16");
+		$$ = value;
+	}
+	| TYPE_INTEGER_32 {
+		ASTValue * value = new ASTValue();
+		value->setValue("int32");
+		$$ = value;
+	}
+	| TYPE_FLOAT {
+		ASTValue * value = new ASTValue();
+		value->setValue("float");
+		$$ = value;
+	}
+	| TYPE_BOOL {
+		ASTValue * value = new ASTValue();
+		value->setValue("bool");
+		$$ = value;
+	}
+	| IDENTIFIER {
+		ASTValue * value = new ASTValue();
+		value->setValue($1);
+		$$ = value;
+	}
+	| TYPE_LIST '<' types '>' {
+		ASTDef * astDef = new ASTDef();
+		astDef->setType("list");
+		astDef->setOther($3);
 		$$ = astDef;
 	}
 	;

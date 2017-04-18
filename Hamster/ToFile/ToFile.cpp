@@ -189,7 +189,7 @@ std::string Hamster::ToFile::getMeta(vector<ASTDef*> body, int space)
 void Hamster::ToFile::initMessageID()
 {
 	// TODO 这里之后要改为相对路径
-	ifstream infile("E:\\My\\C++\\Hamster\\Debug\\init.txt");
+	ifstream infile("init.txt");
 	if (!infile.is_open())   //若失败,则输出错误消息,并终止程序运行 
 	{
 		LOG_ERROR("Error: Unable to read from the configuration file");
@@ -214,7 +214,7 @@ void Hamster::ToFile::initMessageID()
 void Hamster::ToFile::saveMessageID()
 {
 	// TODO 这里之后要改为相对路径
-	ofstream  infile("E:\\My\\C++\\Hamster\\Debug\\init.txt");
+	ofstream  infile("init.txt");
 	if (!infile.is_open())
 	{
 		LOG_ERROR("Error: Unable to save from the configuration file");

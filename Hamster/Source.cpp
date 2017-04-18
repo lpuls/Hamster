@@ -27,13 +27,12 @@ int main()
     {
 		ToFile::initMessageID();
 		ToPy toPy;
-		std::string content = toPy.toFile(body);  // body->toString();
+		std::string content = toPy.toFile(body);
 		ToFile::saveMessageID();
         LOG_INFO(content);
-        Bison::getInstance()->toFile("E:\\My\\C++\\Hamster\\" + toPy.getPackageName() + ".py", content);
+        Bison::getInstance()->toFile("Example\\Result\\" + toPy.getPackageName() + ".py", content);
     }
     Bison::getInstance()->clear();
-    // Bison::getInstance()->toFile("G:/Code/C++/Hamster/Code.txt");
 #else
 
     ASTGuidance * guidance = new ASTGuidance();

@@ -1740,7 +1740,7 @@ void count()
 
 void yyInit()
 {
-    fopen_s(&yyin, "E:\\My\\C++\\Hamster\\Example.proto", "r");
+    fopen_s(&yyin, "Example\\Proto\\Example.proto", "r");
 }
 
 void yyOver()

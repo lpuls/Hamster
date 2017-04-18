@@ -47,6 +47,10 @@ num [0-9]
 	count();
 	return TYPE_BOOL;
 }
+"list" {
+	count();
+	return TYPE_LIST;
+}
 "import" { 
 	count();
 	return IMPORT; 
@@ -92,6 +96,14 @@ num [0-9]
 	count();
 	return(']'); 
 }
+"<" {
+	count();
+	return('<');
+}
+">" {
+	count();
+	return('>');
+}
 "=" {
 	count();
 	return('='); 
@@ -134,7 +146,7 @@ void count()
 
 void yyInit()
 {
-    fopen_s(&yyin, "E:\\My\\C++\\Hamster\\Example.txt", "r");
+    fopen_s(&yyin, "Example\\Proto\\Example.proto", "r");
 }
 
 void yyOver()
